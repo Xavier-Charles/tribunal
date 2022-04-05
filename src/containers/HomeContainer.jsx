@@ -8,6 +8,11 @@ import Hero from "../components/Hero";
 import DaosFromYourNFTs from "../components/DaosFromYourNFTs";
 import AllDaos from "../components/AllDaos";
 
+/**
+ * 
+ * doc: https://github.com/nft-api/nft-api#supported-blockchains
+ */
+
 const HomeContainer = () => {
   const { authenticate, isAuthenticated, logout, user } = useMoralis();
   const Web3Api = useMoralisWeb3Api();
@@ -25,9 +30,10 @@ const HomeContainer = () => {
 
     if (isSubscribed && isAuthenticated) {
       (async () => {
-        const options = { q: "", filter: "global", chain: "Eth" };
+        // const options = { q: "", filter: "global", chain: "eth" }; // Mainnet
+        const optionsRop = { q: "", filter: "global", chain: "ropsten" }; // Mainnet
 
-        const res = await Web3Api.account.getNFTs(options);
+        const res = await Web3Api.account.getNFTs(optionsRop);
         console.log(res);
         setuserNFTs(res.result);
       })();

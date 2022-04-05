@@ -1,16 +1,18 @@
-import React from 'react'
+import React from "react";
 
 const ConnectWallet = ({ handleAuthenticate }) => {
   return (
     <section className="text-gray-600 body-font">
       <div className="container max-w-xl py-12 mx-auto">
         <div className="w-full flex flex-col sm:flex-row sm:items-center items-start mx-auto">
-          <h1 className="flex-grow sm:pr-16 text-base font-medium title-font text-gray-500">
-            Filter Daos by NFTs in your Wallet
-          </h1>
+          <h3 className="flex-grow sm:pr-16 text-base font-medium title-font text-gray-500">
+            Filter Daos by NFTs in your Wallet. Switch to the{" "}
+            <span className="font-bold">Ropsten</span> Test Network and connect
+            your <span className="font-bold">Metamask</span> wallet.
+          </h3>
           <button
             onClick={handleAuthenticate}
-            className="flex-shrink-0 text-black bg-gold border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded text-lg mt-10 sm:mt-0"
+            className="flex-shrink-0 text-cadet bg-gold border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded text-lg mt-10 sm:mt-0"
           >
             Connect Wallet
           </button>
@@ -20,4 +22,4 @@ const ConnectWallet = ({ handleAuthenticate }) => {
   );
 };
 
-export default ConnectWallet
+export default ConnectWallet;

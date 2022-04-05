@@ -4,6 +4,8 @@ module.exports = {
     extend: {
       colors: {
         gold: "#cb9f2d",
+        brown: "#6b491d",
+        cadet: "#181C3A",
       },
     },
   },
