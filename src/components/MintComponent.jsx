@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMintNftAction } from "../api/mintNFT";
 
-const MintComponent = () => {
-  const { isMinting, minted, hash, error, mintNFT } = useMintNftAction();
+const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
 
   const handleClick = async () => {
     await mintNFT();
