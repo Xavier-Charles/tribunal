@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useMintNftAction } from "../api/mintNFT";
 
 const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
-
   const handleClick = async () => {
     await mintNFT();
   };
@@ -11,7 +10,6 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
   return (
     <section className="text-gray-600 body-font relative">
       <div className="container px-5 py-24 mx-auto">
-        {console.log({ isMinting, minted, hash, error, mintNFT })}
         <div className="flex flex-col text-center w-full mb-12">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
             Mint a test NFT
@@ -23,6 +21,7 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
             <span className="font-bold">Metamask</span> wallet. Need Ropsten
             Ether?{" "}
             <a
+              target="_blank"
               href="https://faucet.metamask.io/"
               className="underline text-gold"
             >
@@ -30,6 +29,7 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
             </a>
             ,{" "}
             <a
+              target="_blank"
               href="https://faucet.dimensions.network/"
               className="underline text-gold"
             >
@@ -37,6 +37,7 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
             </a>
             ,{" "}
             <a
+              target="_blank"
               href="https://faucet.egorfine.com/"
               className="underline text-gold"
             >

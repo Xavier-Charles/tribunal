@@ -11,11 +11,11 @@ export const ConnectWallet = async () => {
     const { ethereum } = window;
 
     if (!ethereum) {
-      console.log("Metamask not detected");
+      // console.log("Metamask not detected");
       return;
     }
     let chainId = await ethereum.request({ method: "eth_chainId" });
-    console.log("Connected to chain:" + chainId);
+    // console.log("Connected to chain:" + chainId);
 
     const ropstenChainId = "0x3";
 
@@ -26,10 +26,10 @@ export const ConnectWallet = async () => {
 
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
-    console.log("Found account", accounts[0]);
+    // console.log("Found account", accounts[0]);
     return accounts[0];
   } catch (error) {
-    console.log("Error connecting to metamask", error);
+    // console.log("Error connecting to metamask", error);
   }
 };
 
@@ -57,26 +57,26 @@ export const useMintNftAction = () => {
         const nftTx = await nftContract.mintNFT(userAddress, token_uri, {
           gasLimit: 500_000,
         });
-        console.log(nftTx);
+        // console.log(nftTx);
 
         //the transaction
-        console.log("Minting....", nftTx.hash);
+        // console.log("Minting....", nftTx.hash);
         setisMinting(true);
 
         let tx = await nftTx.wait();
         setMinted(true);
-        console.log("Mined!", tx);
+        // console.log("Mined!", tx);
 
         setHash(nftTx.hash);
-        console.log(
-          `Mined, see transaction: https://Ropsten.etherscan.io/tx/${nftTx.hash}`
-        );
+        // console.log(
+        //   `Mined, see transaction: https://Ropsten.etherscan.io/tx/${nftTx.hash}`
+        // );
 
       } else {
-        console.log("Ethereum object doesn't exist!");
+        // console.log("Ethereum object doesn't exist!");
       }
     } catch (error) {
-      console.log("Error minting", error);
+      // console.log("Error minting", error);
       setError(error.message);
     }
   };

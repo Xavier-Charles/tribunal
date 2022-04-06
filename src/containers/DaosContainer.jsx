@@ -13,7 +13,6 @@ const DaosContainer = () => {
   // user.get("ethAddress"); useful function
 
   useEffect(() => {
-    console.log(isAuthenticated, user);
     let isSubscribed = true;
     if (isSubscribed && !user) {
       refetchUserData();
@@ -23,24 +22,6 @@ const DaosContainer = () => {
       isSubscribed = false;
     };
   }, []);
-
-  // useEffect(() => {
-  //   let isSubscribed = true;
-
-  //   console.log(user);
-
-  //   if (isSubscribed && isAuthenticated) {
-  //     (async () => {
-  //       const options = { q: "", filter: "global", chain: "Eth" };
-
-  //       const userEthNFTs = await Web3Api.account.getNFTs(options);
-  //       console.log(userEthNFTs);
-  //     })();
-  //   }
-  //   return () => {
-  //     isSubscribed = false;
-  //   };
-  // }, [user]);
 
   return <></>;
 };

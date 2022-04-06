@@ -25,7 +25,6 @@ const HomeContainer = () => {
   useEffect(() => {
     let isSubscribed = true;
 
-    console.log(user);
 
     if (isSubscribed && isAuthenticated) {
       (async () => {
@@ -33,7 +32,6 @@ const HomeContainer = () => {
         const optionsRop = { q: "", filter: "global", chain: "ropsten" }; // Mainnet
 
         const res = await Web3Api.account.getNFTs(optionsRop);
-        console.log(res);
         setuserNFTs(res.result);
       })();
     }
