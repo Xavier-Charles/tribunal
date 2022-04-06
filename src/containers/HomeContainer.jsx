@@ -12,7 +12,6 @@ import Daos from "../api/testDaos.json";
  * doc: https://github.com/nft-api/nft-api#supported-blockchains
  */
 
-const DaosContractAddresses = Daos.map((dao) => dao.contract_address);
 const HomeContainer = () => {
   const { authenticate, isAuthenticated, logout, user } = useMoralis();
   const Web3Api = useMoralisWeb3Api();
