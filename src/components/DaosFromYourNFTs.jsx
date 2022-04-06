@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Daos from "./DaosList";
+import DaosList from "./DaosList";
 
-const DaosFromYourNFTs = ({ userNFTs, hasUser }) => {
+const DaosFromYourNFTs = ({ hasUser, userDAOsMatch }) => {
   return (
     <>
       <section className="text-gray-600 body-font">
@@ -17,8 +17,8 @@ const DaosFromYourNFTs = ({ userNFTs, hasUser }) => {
           </div>
         </div>
       </section>
-      {userNFTs?.length > 0 ? (
-        <Daos />
+      {userDAOsMatch?.length > 0 ? (
+        <DaosList userDAOsMatch={userDAOsMatch} />
       ) : (
         <div className="w-full max-w-lg text-center flex justify-center my-6 mx-auto">
           <h1 className="sm:text-base text-2xl font-mono  mb-2 text-gray-400">
