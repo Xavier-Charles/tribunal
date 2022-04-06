@@ -1,0 +1,62 @@
+[
+  {
+    "logo": "https://i.imgur.com/qV3cPNV.png",
+    "title": "Tribunal test Dao",
+    "desc": "The tribunal dao governs the upgrades, projects and NFT-based governance for Daos",
+    "slug": "tribunal"
+  },
+  {
+    "logo": "https://i.imgur.com/t8U3TLe.png",
+    "title": "aavegotchi",
+    "desc": "Aavegotchi is an open-source community-owned protocol, enabling true asset ownership for gamers.",
+    "slug": "aavegotchi"
+  },
+  {
+    "logo": "https://i.imgur.com/2SbG9yB.png",
+    "title": "ApecoinDao",
+    "desc": "The ApeCoin community governs itself via the ApeCoin DAO, the decentralized governance framework that supports the Ecosystem Fund.",
+    "slug": "apecoindao"
+  },
+  {
+    "logo": "https://i.imgur.com/X0DsaWa.png",
+    "title": "BitDao",
+    "desc": "Allocate the world's largest DAO-directed treasury, partner with leading protocols, and build the future of finance.",
+    "slug": "bitdao"
+  },
+  {
+    "logo": "https://i.imgur.com/6K0Abyh.png",
+    "title": "CyberKongz",
+    "desc": "The CyberKongz Brand is filled with unique and randomly generated 2D/3D NFT Social Avatars for your online experiences, which boils down to gamified collectibles with utility.",
+    "slug": "cyberkongz"
+  },
+  {
+    "logo": "https://i.imgur.com/HX1zevX.png",
+    "title": "Decentraland Dao",
+    "desc": "The Decentraland DAO owns a substantial purse of MANA which allows it to be truly autonomous as well as subsidize various operations and initiatives throughout Decentraland.",
+    "slug": "decentralnddao"
+  },
+  {
+    "logo": "https://i.imgur.com/w6hJ9T6.png",
+    "title": "Doodle",
+    "desc": "The Doodlebank is our community treasury which boasts over $5m USD and is used to fund these experiences.",
+    "slug": "doodle"
+  },
+  {
+    "logo": "https://i.imgur.com/S9pHYOG.png",
+    "title": "Friends with Benefits",
+    "desc": "FWB is a group of cultural creators and maintainers using Web3 tools to build community and foster creative agency.",
+    "slug": "fwb"
+  },
+  {
+    "logo": "https://i.imgur.com/m0SVaCA.png",
+    "title": "Mutant Cats",
+    "desc": "Mutant Cats is the first DAO that purchases and fractionalizes Cool Cats, CryptoPunks and more valuable blue chip NFTs to be distributed to its members.",
+    "slug": "mutantcats"
+  },
+  {
+    "logo": "https://i.imgur.com/5NID29n.png",
+    "title": "The Mothership Dao",
+    "desc": "The Mothership DAO is an experimental attempt to proxy ownership verification, perks and utility of DAO acquired and owned NFTs to all members.",
+    "slug": "mothershipdao"
+  }
+]

@@ -1,5 +1,5 @@
 import React from "react";
-import Daos from "./daos";
+import Daos from "./DaosList";
 
 const AllDaos = () => {
   return (

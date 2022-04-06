@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Daos from "./daos";
+import Daos from "./DaosList";
 
 const DaosFromYourNFTs = ({ userNFTs, hasUser }) => {
   return (

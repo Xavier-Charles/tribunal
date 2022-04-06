@@ -1,6 +1,7 @@
 import React from "react";
+import "../api/testDaos.json"
 
-const Daos = () => {
+const DaosList = () => {
   return (
     <section className="text-gray-600 body-font">
       <div className="container max-w-7xl px-5 pb-12 mx-auto">
@@ -158,4 +159,4 @@ const Daos = () => {
   );
 };
 
-export default Daos;
+export default DaosList;
