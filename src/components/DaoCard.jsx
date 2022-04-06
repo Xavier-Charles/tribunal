@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 const DaoCard = ({logo, title, desc, slug}) => {
   return (
     <Link to={`/${slug}/proposals/`} className="xl:w-1/3 md:w-1/2 p-4">
-      <div className="border border-gray-200 hover:border-gold p-6 rounded-lg">
+      <div className="border border-gray-200 hover:border-gold p-6 rounded-lg relative">
+        <p className='text-xs bg-cadet text-white absolute right-7 py-0.5 px-2 rounded-lg'>Test</p>
         <img
           alt=""
           src={logo}

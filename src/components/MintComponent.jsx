@@ -10,16 +10,16 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
   return (
     <section className="text-gray-600 body-font relative">
       <div className="container px-5 py-24 mx-auto">
-        <div className="flex flex-col text-center w-full mb-12">
-          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+        <div className="flex flex-col text-center w-full mb-20">
+          <h1 className="sm:text-3xl text-2xl font-medium title-font mb-6 md:mb-8 text-gray-900">
             Mint a test NFT
           </h1>
 
           <h3 className="lg:w-2/3 max-w-lg mx-auto leading-relaxed text-base">
             Please switch to the <span className="font-bold">Ropsten</span> Test
             Network before miniting to your{" "}
-            <span className="font-bold">Metamask</span> wallet. Need Ropsten
-            Ether?{" "}
+            <span className="font-bold">Metamask</span> wallet. Get Ropsten
+            Ether{" "}
             <a
               target="_blank"
               href="https://faucet.metamask.io/"
@@ -35,14 +35,14 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
             >
               here
             </a>
-            ,{" "}
+            , or{" "}
             <a
               target="_blank"
               href="https://faucet.egorfine.com/"
               className="underline text-gold"
             >
               here
-            </a>
+            </a>.
           </h3>
         </div>
         <div className="lg:w-1/2 md:w-2/3 mx-auto">
