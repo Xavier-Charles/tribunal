@@ -1,7 +1,7 @@
 import React from "react";
 import { ethers } from "ethers";
 import { useState } from "react";
-import contractABI from "./TribunalNFT.json";
+import contractABI from "./tribunalABI.json";
 
 const contract_address = import.meta.env.VITE_TEST_CONTRACT_ADDRESS;
 const token_uri = import.meta.env.VITE_TEST_TOKEN_URI;
