@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Daos from "./daos";
 
 const DaosFromYourNFTs = ({ userNFTs, hasUser }) => {
@@ -22,8 +23,11 @@ const DaosFromYourNFTs = ({ userNFTs, hasUser }) => {
         <div className="w-full max-w-lg text-center flex justify-center my-6 mx-auto">
           <h1 className="sm:text-base text-2xl font-mono  mb-2 text-gray-400">
             {hasUser
-              ? "No DAOs on Tribunal Matched Your NFTs"
-              : "When You Connect Your Wallet, DAOs That Match Your NFTs Will Be Displayed Here."}
+              ? "No DAOs on Tribunal Matched Your NFTs."
+              : "When You Connect Your Wallet, DAOs That Match Your NFTs Will Be Displayed Here."}{" "}
+            <Link to="/mint" className="text-gold">
+              Mint a test NFT
+            </Link>
           </h1>
         </div>
       )}

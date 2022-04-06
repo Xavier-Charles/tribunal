@@ -14,13 +14,34 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
         {console.log({ isMinting, minted, hash, error, mintNFT })}
         <div className="flex flex-col text-center w-full mb-12">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-            Mint a Test NFT
+            Mint a test NFT
           </h1>
 
           <h3 className="lg:w-2/3 max-w-lg mx-auto leading-relaxed text-base">
-            Filter Daos by NFTs in your Wallet. Switch to the{" "}
-            <span className="font-bold">Ropsten</span> Test Network and connect
-            your <span className="font-bold">Metamask</span> wallet.
+            Please switch to the <span className="font-bold">Ropsten</span> Test
+            Network before miniting to your{" "}
+            <span className="font-bold">Metamask</span> wallet. Need Ropsten
+            Ether?{" "}
+            <a
+              href="https://faucet.metamask.io/"
+              className="underline text-gold"
+            >
+              here
+            </a>
+            ,{" "}
+            <a
+              href="https://faucet.dimensions.network/"
+              className="underline text-gold"
+            >
+              here
+            </a>
+            ,{" "}
+            <a
+              href="https://faucet.egorfine.com/"
+              className="underline text-gold"
+            >
+              here
+            </a>
           </h3>
         </div>
         <div className="lg:w-1/2 md:w-2/3 mx-auto">

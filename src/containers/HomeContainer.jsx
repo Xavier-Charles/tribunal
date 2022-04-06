@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useMoralis, useMoralisWeb3Api } from "react-moralis";
 import "./home.css";
 import Navbar from "../components/Navbar";
-import Daos from "../components/daos";
 import Hero from "../components/Hero";
 import DaosFromYourNFTs from "../components/DaosFromYourNFTs";
 import AllDaos from "../components/AllDaos";
@@ -20,6 +18,7 @@ const HomeContainer = () => {
   const [userNFTs, setuserNFTs] = useState([])
 
   const handleAuthenticate = () => {
+    logout()
     authenticate({signingMessage: "Filter Daos by NFTs in your Wallet"});
   };
 

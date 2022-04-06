@@ -10,8 +10,7 @@ const Hero = ({ handleAuthenticate }) => {
             Tribunal
           </h1>
           <p className="lg:w-1/2 w-full leading-relaxed text-gray-600 mt-5 max-w-xl">
-            Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-            gentrify, subway tile poke farm-to-table.
+            NFT-based governance for Daos
           </p>
         </div>
         <ConnectWallet handleAuthenticate={handleAuthenticate} />
