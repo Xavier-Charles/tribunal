@@ -12,10 +12,10 @@ const DaoCard = ({logo, title, desc, slug}) => {
           className=" w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 border-0 mb-4"
         />
 
-        <h2 className="text-lg text-gray-900 font-medium title-font mb-2">
+        <h2 className="text-lg text-gray-900 font-serif font-medium title-font mb-2">
           {title}
         </h2>
-        <p className="leading-relaxed text-base">{desc}</p>
+        <p className="leading-relaxed text-gray-500 text-base">{desc}</p>
       </div>
     </Link>
   );
