@@ -11,17 +11,14 @@ const ProposalsContainer = () => {
   const {slug} = useParams()
 
   const dao = Daos.find((daoObj) => daoObj.slug === slug);
-  const proposals = Proposals.find((proObj) => proObj.slug === slug);
 
   return (
     <>
       <Navbar />
       <div id="content" className="pb-6 pt-14">
-        <div
-          className="px-0 md:px-4 max-w-7xl mx-auto"
-        >
+        <div className="px-0 md:px-4 max-w-7xl mx-auto">
           <SideBar dao={dao} />
-          <ProposalsList proposals={proposals} />
+          <ProposalsList proposals={Proposals} dao={dao} />
         </div>
       </div>
     </>

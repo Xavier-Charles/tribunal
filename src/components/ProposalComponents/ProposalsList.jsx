@@ -1,7 +1,28 @@
+import moment from "moment";
 import React from "react";
 import Proposal from "./Proposal";
 
-const ProposalsList = () => {
+const ProposalsList = ({ proposals, dao }) => {
+
+  const daysLeft = (date) => moment(date).diff(moment(), "days");
+  const sortFunction = (a, b) => {
+    return daysLeft(a.endDate) - daysLeft(b.endDate);
+  };
+
+  const sortProposals = () => {
+    const closed = [];
+    const open = [];
+    proposals.forEach((proposal) =>
+      moment(proposal.endDate).isBefore(moment())
+        ? closed.push(proposal)
+        : open.push(proposal)
+    );
+    closed.sort(sortFunction);
+    open.sort(sortFunction);
+    return [...open, ...closed];
+  };
+  const sortedProposals = sortProposals();
+
   return (
     <div
       className="w-full lg:w-3/4 float-right pl-0 lg:pl-5 relative"
@@ -37,7 +58,9 @@ const ProposalsList = () => {
         </div>
       </div>
       <div className="md:space-y-4 my-4">
-        <Proposal />
+        {sortedProposals.map((proposal) => (
+          <Proposal proposal={proposal} dao={dao} />
+        ))}
       </div>
       <div className="w-[10px] h-[10px] absolute bottom-0"></div>
     </div>
