@@ -3,7 +3,7 @@ import ConnectWallet from './ConnectWallet';
 
 const Hero = ({ handleAuthenticate }) => {
   return (
-    <section className="text-gray-600 body-font">
+    <section className="text-gray-600 body-font pt-28 lg:pt-36">
       <div className="container max-w-7xl px-5 py-24 mx-auto">
         <div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
           <h1 className="sm:text-3xl text-2xl font-serif font-medium mb-2 text-gray-900">

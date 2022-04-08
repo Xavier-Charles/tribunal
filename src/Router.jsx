@@ -16,6 +16,8 @@ function Router() {
           element={<DaosPage type="proposals" />}
         />
         <Route path="/:slug/about" element={<DaosPage type="about" />} />
+        <Route path="/:slug/proposals/new" element={<DaosPage type="new" />} />
+        <Route path="/:slug/proposal/:id" element={<DaosPage type="proposal" />} />
       </Routes>
     </div>
   );
