@@ -1,29 +1,35 @@
-import React, { useContext, useEffect } from "react";
-import { useMoralis, useMoralisWeb3Api } from "react-moralis";
-// import NoNfts from "../components/NoNfts";
-import { MoralisInitContext } from "../context/MoralisInitContext";
+import React from "react";
+import { useParams } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import ProposalsList from "../components/ProposalComponents/ProposalsList";
+import SideBar from "../components/SideBar";
+import Daos from "../api/testDaos.json";
+import Proposals from "../api/testProposals.json";
+import AboutComponent from "../components/AboutComponent";
+import NewProposal from "../components/ProposalComponents/NewProposal";
 
-const DaosContainer = () => {
-  const { Moralis, Web3Api } = useContext(MoralisInitContext);
-  const { authenticate, isAuthenticated, logout, user, refetchUserData } =
-    Moralis;
-  const MoralisTest = useMoralis();
-  // MoralisTest
+const DaosContainer = ({ type }) => {
+  const { slug } = useParams();
 
-  // user.get("ethAddress"); useful function
+  const dao = Daos.find((daoObj) => daoObj.slug === slug);
 
-  useEffect(() => {
-    let isSubscribed = true;
-    if (isSubscribed && !user) {
-      refetchUserData();
-    }
-
-    return () => {
-      isSubscribed = false;
-    };
-  }, []);
-
-  return <></>;
+  return (
+    <>
+      <Navbar />
+      <div id="content" className="pb-6 pt-14">
+        <div className="px-0 md:px-4 max-w-7xl mx-auto">
+          <SideBar dao={dao} type={type} />
+          {type === "about" ? (
+            <AboutComponent dao={dao} />
+          ) : type === "about" ? (
+            <ProposalsList proposals={Proposals} dao={dao} />
+          ) : (
+            <NewProposal dao={dao} />
+          )}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default DaosContainer;

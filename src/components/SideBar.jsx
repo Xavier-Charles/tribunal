@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-const SideBar = ({ dao }) => {
+const SideBar = ({ dao, type }) => {
   const navigate = useNavigate();
 
   const handleJoin = (isTribunal) => {
@@ -64,14 +64,19 @@ const SideBar = ({ dao }) => {
             <div className="py-2">
               <SideBarLink
                 name="Proposals"
-                active={true}
+                active={type === "proposals"}
                 url={`/${dao.slug}/proposals`}
               />
               <SideBarLink
                 name="New proposal"
+                active={type === "new"}
                 url={`/${dao.slug}/proposals/new`}
               />
-              <SideBarLink name="About" url={`/${dao.slug}/about`} />
+              <SideBarLink
+                name="About"
+                active={type === "about"}
+                url={`/${dao.slug}/about`}
+              />
             </div>
             <div className="text-center">
               <div className="my-3 mx-2 flex justify-center items-center space-x-3">

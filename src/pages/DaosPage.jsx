@@ -1,13 +1,10 @@
-import React from "react";
-import DaosContainer from "../containers/DaosContainer";
-import MainContainer from "../containers/MainContainer";
+import React from 'react'
+import DaosContainer from '../containers/DaosContainer'
 
-function DaosPage() {
+const DaosPage = ({type}) => {
   return (
-    <MainContainer>
-      <DaosContainer />
-    </MainContainer>
-  );
+    <DaosContainer type={type}/>
+  )
 }
 
-export default DaosPage;
+export default DaosPage

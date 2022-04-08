@@ -1,8 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import DaosPage from "./pages/DaosPage";
 import Home from "./pages/HomePage";
 import MintPage from "./pages/MintPage";
-import ProposalsPage from "./pages/ProposalsPage";
+import DaosPage from "./pages/DaosPage";
 
 
 function Router() {
@@ -12,7 +11,11 @@ function Router() {
         <Route path="/" element={<Home />} />
         <Route path="/daos" element={<DaosPage />} />
         <Route path="/mint" element={<MintPage />} />
-        <Route path="/:slug/proposals" element={<ProposalsPage />} />
+        <Route
+          path="/:slug/proposals"
+          element={<DaosPage type="proposals" />}
+        />
+        <Route path="/:slug/about" element={<DaosPage type="about" />} />
       </Routes>
     </div>
   );
