@@ -11,7 +11,7 @@ const Proposal = ({ proposal, dao }) => {
     <div className="lg:flex px-2 sm:px-5 md:px-0 lg:ml-72">
       <div className="w-full lg:w-8/12 lg:pr-5 md:mt-3 relative" id="content-left">
         <div className="w-full px-3 md:px-0 mb-2 flex justify-between items-center">
-          <div className="flex items-center flex-auto">
+          <div className="flex items-center flex-auto p">
             <h2 className="font-serif text-xl">Proposal</h2>
           </div>
           <Link
