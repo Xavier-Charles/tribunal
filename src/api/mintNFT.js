@@ -29,7 +29,8 @@ export const ConnectWallet = async () => {
     // console.log("Found account", accounts[0]);
     return accounts[0];
   } catch (error) {
-    // console.log("Error connecting to metamask", error);
+    console.log("Error connecting to metamask", error);
+    return null
   }
 };
 

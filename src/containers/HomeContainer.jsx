@@ -6,6 +6,7 @@ import Hero from "../components/Hero";
 import DaosFromYourNFTs from "../components/DaosFromYourNFTs";
 import AllDaos from "../components/AllDaos";
 import Daos from "../api/testDaos.json";
+import CheckNFTs from "../api/checkNFTs";
 
 /**
  *
@@ -13,15 +14,12 @@ import Daos from "../api/testDaos.json";
  */
 
 const HomeContainer = () => {
-  const { authenticate, isAuthenticated, logout, user } = useMoralis();
-  const Web3Api = useMoralisWeb3Api();
 
-  const [userNFTs, setuserNFTs] = useState([]);
   const [userDAOsMatch, setUserDAOsMatch] = useState([]);
 
-  const handleAuthenticate = () => {
-    logout();
-    authenticate({ signingMessage: "Filter Daos by NFTs in your Wallet" });
+  const handleAuthenticate = async () => {
+    const data = await CheckNFTs();
+    if (data.length > 0) setUserDAOsMatch(data);
   };
 
   const handleMatchUserToDAO = async () => {
@@ -43,36 +41,6 @@ const HomeContainer = () => {
     return match;
   };
 
-  useEffect(() => {
-    let isSubscribed = true;
-
-    if (isSubscribed && isAuthenticated) {
-      (async () => {
-        // const options = { q: "", filter: "global", chain: "eth" }; // Mainnet
-        const optionsRop = { q: "", filter: "global", chain: "ropsten" }; // Mainnet
-
-        const res = await Web3Api.account.getNFTs(optionsRop);
-        setuserNFTs(res.result);
-      })();
-    }
-    return () => {
-      isSubscribed = false;
-    };
-  }, [isAuthenticated]);
-
-  useEffect(() => {
-    let isSubscribed = true;
-    if (isSubscribed && userNFTs.length > 0) {
-      (async () => {
-        const data = await handleMatchUserToDAO();
-        if (data.length > 0) setUserDAOsMatch(data);
-      })();
-    }
-
-    return () => {
-      isSubscribed = false;
-    };
-  }, [userNFTs]);
 
   return (
     <>
