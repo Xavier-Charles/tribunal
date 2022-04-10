@@ -1,15 +1,79 @@
-import React from "react";
-import { useMoralis } from "react-moralis";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import ConnectWallet from "../ConnectWallet";
+import CheckNFTs from "../../api/checkNFTs";
+import { createProposal } from "../../api/proposals";
+import DateInput from "../DateInput";
 
 const NewProposal = ({ dao }) => {
-  // const { authenticate, isAuthenticated, logout, user } = useMoralis();
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [desc, setDesc] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-  const handleAuthenticate = () => {
-    logout();
-    authenticate({ signingMessage: "Verify your Wallet" });
+  async function authenticate() {
+    try {
+      const user = await Moralis.authenticate({
+        signingMessage: "Verify wallet address to submit your proposal",
+      });
+      return user;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+
+  const handleSubmit = async (event) => {
+    setSubmitting(true);
+    try {
+
+      if (
+        title.target.value.length > 0 &&
+        desc.target.value.length > 0 &&
+        startDate.target.value.length > 0 &&
+        endDate.target.value.length > 0
+      ) {
+        const nfts = await CheckNFTs();
+        if (nfts.length !== 0) {
+          const user = await authenticate();
+
+          if (user) {
+            const data = {
+              title: title.target.value,
+              desc: desc.target.value,
+              startDate: startDate.target.value,
+              endDate: endDate.target.value,
+              author: user.get("ethAddress"),
+              votes: {},
+            };
+            const response = await createProposal(data);
+            if (response) {
+              setSuccess("Proposal created successfully");
+              setTimeout(() => setSuccess(null), 5000);
+            }
+
+            event.preventDefault();
+          } else {
+            setError("Wallet authentication failed.");
+            setTimeout(() => setError(null), 5000);
+          }
+        } else {
+          setError("No Matching NFTs for this DAO in your wallet.");
+          setTimeout(() => setError(null), 5000);
+        }
+      } else {
+        setError("A field is empty. All fields are required.");
+        setTimeout(() => setError(null), 5000);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    setSubmitting(false);
   };
+
   return (
     <div className="lg:flex max-w-3xl justify-start lg:ml-72">
       <div className="xl:w-9/12 lg:pr-5 relative" id="content-left">
@@ -43,19 +107,7 @@ const NewProposal = ({ dao }) => {
             </Link>
           </div>
           <div className="relative inline-block text-left h-full">
-            <div className="inline-flex items-center w-full h-full cursor-pointer">
-              {/* //TODO: Filter List of proposals */}
-              {/* <button
-              type="button"
-              className="button px-[24px] pr-3"
-            >
-              All{" "}
-              <i
-                className="iconfont iconarrow-down mt-1 mr-1"
-                style={{ fontSize: "14px", lineHeight: "14px" }}
-              ></i>
-            </button> */}
-            </div>
+            <div className="inline-flex items-center w-full h-full cursor-pointer"></div>
           </div>
         </div>
 
@@ -64,7 +116,7 @@ const NewProposal = ({ dao }) => {
             <i className="iconfont iconwarning mr-1 float-left"></i>
             <div className="leading-5">
               <span>
-                You need to have a minimum of 1 Admin NFT in order to submit a
+                You need to have a minimum of 1 NFT from this DAO to submit a
                 proposal.
               </span>
             </div>
@@ -77,6 +129,7 @@ const NewProposal = ({ dao }) => {
               <div>
                 <div className="z-10 relative">
                   <input
+                    onChange={setTitle}
                     maxLength="128"
                     // className="text-md font-semibold s-input w-full !rounded-full"
                     className="py-2 px-4 w-full min-h-[40px] border-gray-200 border focus:border !rounded-xl text-base h-full mt-0 mb-4 focus-visible:outline-none"
@@ -87,7 +140,7 @@ const NewProposal = ({ dao }) => {
             </div>
             <div className="mb-6">
               <div className="flex justify-between">
-                <label className="s-label">Description (optional)</label>
+                <label className="s-label">Description</label>
                 <div className="text-xs">max 14,400</div>
               </div>
               <div>
@@ -95,9 +148,11 @@ const NewProposal = ({ dao }) => {
                   <textarea
                     className="py-2 px-4 w-full min-h-[240px] border-none !rounded-xl text-base h-full mt-0 focus-visible:outline-none"
                     maxLength="14400"
+                    onChange={setDesc}
                   ></textarea>
                 </div>
-                <label className="relative flex justify-between border border-skin-border rounded-b-xl py-1 px-2 items-center peer-focus-within:border-skin-text border-t-0">
+                {/* Images */}
+                {/* <label className="relative flex justify-between border border-skin-border rounded-b-xl py-1 px-2 items-center peer-focus-within:border-skin-text border-t-0">
                   <input
                     accept="image/jpg, image/jpeg, image/png"
                     type="file"
@@ -120,7 +175,13 @@ const NewProposal = ({ dao }) => {
                       style={{ fontSize: "16px", lineHeight: "16px" }}
                     ></i>
                   </a>
-                </label>
+                </label> */}
+              </div>
+            </div>
+            <div className="mb-6">
+              <div className="z-10 relative flex justify-between">
+                <DateInput title="Start Date" handleChange={setStartDate} />
+                <DateInput title="End Date" handleChange={setEndDate} />
               </div>
             </div>
             {/* <div className="flex flex-col mb-8">
@@ -134,11 +195,25 @@ const NewProposal = ({ dao }) => {
             <div className="">
               <div className="p-4 leading-5 flex flex-col justify-center sm:leading-6">
                 <button
-                  onClick={handleAuthenticate}
+                  onClick={handleSubmit}
                   className="text-cadet bg-gold border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded text-lg mt-10 sm:mt-0"
                 >
-                  Connect Wallet
+                  {submitting ? "Submiting.." : "Submit"}
                 </button>
+                <p
+                  className={`${
+                    error ? "" : "hidden"
+                  }text-center text-sm text-red-500 mt-2`}
+                >
+                  {error}
+                </p>
+                <p
+                  className={`${
+                    success ? "" : "hidden"
+                  }text-center text-sm text-green-500 mt-2`}
+                >
+                  {success}
+                </p>
               </div>
             </div>
           </div>

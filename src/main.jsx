@@ -5,7 +5,7 @@ import Router from "./Router";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
-
+import MoralisInitProvider from "./context/MoralisInitContext";
 
 const container = document.getElementById("root");
 
@@ -16,9 +16,11 @@ const root = ReactDOMClient.createRoot(container);
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <MoralisInitProvider />
       <Provider store={store}>
         <Router />
       </Provider>
+      <MoralisInitProvider />
     </BrowserRouter>
   </React.StrictMode>
 );
