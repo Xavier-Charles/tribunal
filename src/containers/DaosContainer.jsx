@@ -33,7 +33,7 @@ const DaosContainer = ({ type }) => {
     let isSubscribed = true;
 
     if (isSubscribed && id) {
-      const data = Proposals.find((p) => String(p.id) === id);
+      const data = proposals.find((p) => String(p._id) === id);
       if (data) setProposal(data);
     }
     return () => {

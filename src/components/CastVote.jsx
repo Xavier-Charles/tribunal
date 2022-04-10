@@ -1,6 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
+import CheckNFTs from "../api/checkNFTs";
+import { updateProposal } from "../api/proposals";
 
-const CastVote = () => {
+const CastVote = ({ proposal, handleProposal }) => {
+  const [message, setMessage] = useState(null);
+  const handleMessage = (m) => {
+    setMessage(m);
+    setTimeout(() => setMessage(null), 5000);
+  };
+  const handleVote = async (type) => {
+    if (proposal) {
+      try {
+        const nfts = await CheckNFTs();
+        if (nfts.length !== 0) {
+          const user = await Moralis.authenticate({
+            signingMessage: "Verify wallet address to vote.",
+          });
+          if (user) {
+            const voters = Object.keys(proposal.votes || []);
+            const userAddress = user.get("ethAddress");
+            if (!voters.includes(userAddress)) {
+              const data = await updateProposal(proposal._id, {
+                votes: {
+                  ...proposal.votes,
+                  [userAddress]: type,
+                },
+              });
+              if (data) {
+                handleMessage("Vote Sucessful.");
+                handleProposal(data);
+              } else handleMessage("Something went wrong");
+            } else handleMessage("This address has already Voted.");
+          } else handleMessage("Couldn't verify your wallet.");
+        } else handleMessage("No Matching NFTs for this DAO in your wallet.");
+      } catch (err) {
+        console.log(err);
+        handleMessage(err.message);
+      }
+    }
+  };
   return (
     <div className="md:rounded-xl md:border bg-skin-block-bg border-skin-border text-base my-4">
       <h4
@@ -14,28 +52,29 @@ const CastVote = () => {
           <div className="mb-3">
             <button
               type="button"
-              className="button px-[24px] block w-full mb-2"
-              data-v-1b931a55=""
+              onClick={() => handleVote("For")}
+              className="button px-[24px] py-2 block w-full mb-2 rounded md:rounded-xl md:border border active:bg-gold  border-gray-200 hover:border-gold"
             >
               For
             </button>
             <button
               type="button"
-              className="button px-[24px] block w-full mb-2"
-              data-v-1b931a55=""
+              onClick={() => handleVote("Against")}
+              className="button px-[24px] py-2 mt-1 block w-full mb-2 rounded md:rounded-xl md:border border active:bg-gold  border-gray-200 hover:border-gold"
             >
               Against
             </button>
           </div>
         </div>
-        <button
-          type="button"
-          className="button px-[24px] button--primary hover:brightness-95 block w-full"
-          disabled=""
-          data-v-1b931a55=""
-        >
-          Vote
-        </button>
+        {message && (
+          <p
+            className={`my-2 text-center ${
+              message === "Vote Sucessful." ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {message}
+          </p>
+        )}
       </div>
     </div>
   );

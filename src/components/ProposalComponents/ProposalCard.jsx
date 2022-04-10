@@ -13,7 +13,7 @@ const ProposalCard = ({ proposal, dao }) => {
     <div className="w-full relative rounded md:rounded-xl md:border border border-gray-200 hover:border-gold  text-base transition-colors border-b first:border-t">
       <div className="leading-5 sm:leading-6">
         <Link
-          to={`/${dao.slug}/proposal/${proposal.id}`}
+          to={`/${dao.slug}/proposal/${proposal._id}`}
           className="p-3 sm:p-4 block"
         >
           <div>

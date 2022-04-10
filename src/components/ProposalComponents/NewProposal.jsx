@@ -68,6 +68,8 @@ const NewProposal = ({ dao }) => {
       }
     } catch (err) {
       console.log(err);
+      setError(err.message);
+      setTimeout(() => setError(null), 5000);
     }
 
     setSubmitting(false);

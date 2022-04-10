@@ -1,5 +1,6 @@
 import moment from "moment";
 import React from "react";
+import truncateLongNames from "../../utils/truncateLongNames";
 import ProposalCard from "./ProposalCard";
 import ProposalCardskeleton from "./ProposalCardskeleton";
 
@@ -7,10 +8,6 @@ const ProposalsList = ({ proposals, dao }) => {
   const daysLeft = (date) => moment(date).diff(moment(), "days");
   const sortFunction = (a, b) => {
     return daysLeft(a.endDate) - daysLeft(b.endDate);
-  };
-  const truncateLongNames = (name) => {
-    if (name.length > 20) return `${name.slice(0, 6)}...${name.slice(-5)}`;
-    return name;
   };
 
   const sortProposals = () => {
