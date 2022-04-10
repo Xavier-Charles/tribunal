@@ -92,7 +92,7 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
                 </p>
               )}
             </div>
-            <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 text-center">
+            <div className="p-2 w-full pt-4 mt-12 border-t border-gray-200 text-center">
               <Link to="/" className="text-gold font-serif text-lg">
                 Tribunal
               </Link>
