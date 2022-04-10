@@ -1,6 +1,7 @@
 import moment from "moment";
 import React from "react";
 import ProposalCard from "./ProposalCard";
+import ProposalCardskeleton from "./ProposalCardskeleton";
 
 const ProposalsList = ({ proposals, dao }) => {
   const daysLeft = (date) => moment(date).diff(moment(), "days");
@@ -19,7 +20,7 @@ const ProposalsList = ({ proposals, dao }) => {
       moment(proposal.endDate).isBefore(moment())
         ? closed.push(proposal)
         : open.push(proposal);
-      proposal.author = truncateLongNames(proposal.author)
+      proposal.author = truncateLongNames(proposal.author);
     });
     closed.sort(sortFunction);
     open.sort(sortFunction);
@@ -27,11 +28,23 @@ const ProposalsList = ({ proposals, dao }) => {
   };
   const sortedProposals = sortProposals();
 
+  const Placeholder = () => (
+    <>
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+      <ProposalCardskeleton />
+    </>
+  );
+
   return (
-    <div
-      className="w-full lg:w-3/4 lg:ml-72 relative"
-      id="content-right"
-    >
+    <div className="w-full lg:w-3/4 lg:ml-72 relative" id="content-right">
       <div className="px-5 lg:px-0 mb-3 flex relative">
         <div className="flex-auto">
           <div className="flex items-center flex-auto">
@@ -55,9 +68,13 @@ const ProposalsList = ({ proposals, dao }) => {
         </div>
       </div>
       <div className="space-y-4 px-5 lg:px-0 my-4 lg:w-11/12 w-full">
-        {sortedProposals.map((proposal) => (
-          <ProposalCard key={proposal._id} proposal={proposal} dao={dao} />
-        ))}
+        {sortedProposals.length === 0 ? (
+          <Placeholder />
+        ) : (
+          sortedProposals.map((proposal) => (
+            <ProposalCard key={proposal._id} proposal={proposal} dao={dao} />
+          ))
+        )}
       </div>
       <div className="w-[10px] h-[10px] absolute bottom-0"></div>
     </div>
