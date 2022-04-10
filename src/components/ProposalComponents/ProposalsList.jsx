@@ -56,7 +56,7 @@ const ProposalsList = ({ proposals, dao }) => {
       </div>
       <div className="space-y-4 px-5 lg:px-0 my-4 lg:w-11/12 w-full">
         {sortedProposals.map((proposal) => (
-          <ProposalCard key={proposal.id} proposal={proposal} dao={dao} />
+          <ProposalCard key={proposal._id} proposal={proposal} dao={dao} />
         ))}
       </div>
       <div className="w-[10px] h-[10px] absolute bottom-0"></div>

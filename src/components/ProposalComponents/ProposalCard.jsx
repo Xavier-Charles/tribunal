@@ -5,10 +5,10 @@ import Tag from "../Tag";
 
 const ProposalCard = ({ proposal, dao }) => {
   const isClosed = moment(proposal.endDate).isBefore(moment());
-  const daysLeft = () =>  {
-    if (isClosed) return "Ended"
+  const daysLeft = () => {
+    if (isClosed) return "Ended";
     return `${moment(proposal.endDate).diff(moment(), "days")} days left`;
-  }
+  };
   return (
     <div className="w-full relative rounded md:rounded-xl md:border border border-gray-200 hover:border-gold  text-base transition-colors border-b first:border-t">
       <div className="leading-5 sm:leading-6">

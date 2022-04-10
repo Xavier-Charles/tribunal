@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import ProposalsList from "../components/ProposalComponents/ProposalsList";
@@ -8,12 +8,38 @@ import Proposals from "../api/testProposals.json";
 import AboutComponent from "../components/AboutComponent";
 import NewProposal from "../components/ProposalComponents/NewProposal";
 import Proposal from "../components/ProposalComponents/Proposal";
+import { getProposals } from "../api/proposals";
 
 const DaosContainer = ({ type }) => {
   const { slug, id } = useParams();
+  const [proposals, setProposals] = useState([]);
+  const [proposal, setProposal] = useState({});
 
   const dao = Daos.find((daoObj) => daoObj.slug === slug);
-  const proposal = id ? Proposals.find(p => String(p.id) === id) : {}
+
+  useEffect(() => {
+    let isSubscribed = true;
+    if (isSubscribed)
+      (async () => {
+        const data = await getProposals(); // currently using the same proposal list for all daos
+        if (data) setProposals(data);
+      })();
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, []);
+  useEffect(() => {
+    let isSubscribed = true;
+
+    if (isSubscribed && id) {
+      const data = Proposals.find((p) => String(p.id) === id);
+      if (data) setProposal(data);
+    }
+    return () => {
+      isSubscribed = false;
+    };
+  }, [id]);
 
   return (
     <>
@@ -28,7 +54,7 @@ const DaosContainer = ({ type }) => {
           ) : type === "proposal" ? (
             <Proposal proposal={proposal} dao={dao} />
           ) : (
-            <ProposalsList proposals={Proposals} dao={dao} />
+            <ProposalsList proposals={proposals} dao={dao} />
           )}
         </div>
       </div>
