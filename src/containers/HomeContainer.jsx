@@ -23,8 +23,10 @@ const HomeContainer = () => {
   const [userDAOsMatch, setUserDAOsMatch] = useState([]);
 
   const handleAuthenticate = async () => {
-    // const data = await CheckNFTs();
-    // if (data.length > 0) setUserDAOsMatch(data);
+    try{
+    const data = await CheckNFTs();
+    if (data.length > 0) setUserDAOsMatch(data);
+    }
     // const test = await getProposals()
     // const test = await getProposal("62516d48b2c46d7256779c93");
     // const data = {
@@ -42,12 +44,15 @@ const HomeContainer = () => {
     //   },
     // };
     // const test = await createProposal(data);
-    const id = "625193774faf27ae8eed6c20";
-    const data2 = {
-      title: "Decentralize DAO Allocation++qwertyuiop",
-    };
-    const test = await updateProposal(id, data2);
-    console.log(test);
+    // const id = "625193774faf27ae8eed6c20";
+    // const data2 = {
+    //   title: "Decentralize DAO Allocation++qwertyuiop",
+    // };
+    // const test = await updateProposal(id, data2);
+    // console.log(test);
+    catch (err) {
+      console.log(err);
+    }
   };
 
   return (
