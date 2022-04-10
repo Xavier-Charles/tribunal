@@ -25,7 +25,8 @@ const HomeContainer = () => {
   const handleAuthenticate = async () => {
     try{
     const data = await CheckNFTs();
-    if (data.length > 0) setUserDAOsMatch(data);
+    console.log(data);
+    if (data?.length > 0) setUserDAOsMatch(data);
     }
     // const test = await getProposals()
     // const test = await getProposal("62516d48b2c46d7256779c93");
