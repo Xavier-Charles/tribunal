@@ -30,7 +30,7 @@ export const ConnectWallet = async () => {
     return accounts[0];
   } catch (error) {
     console.log("Error connecting to metamask", error);
-    return null
+    return null;
   }
 };
 
@@ -58,7 +58,6 @@ export const useMintNftAction = () => {
         const nftTx = await nftContract.mintNFT(userAddress, token_uri, {
           gasLimit: 500_000,
         });
-        // console.log(nftTx);
 
         //the transaction
         // console.log("Minting....", nftTx.hash);
@@ -69,15 +68,16 @@ export const useMintNftAction = () => {
         // console.log("Mined!", tx);
 
         setHash(nftTx.hash);
+        setisMinting(false);
         // console.log(
         //   `Mined, see transaction: https://Ropsten.etherscan.io/tx/${nftTx.hash}`
         // );
-
       } else {
         // console.log("Ethereum object doesn't exist!");
+        setError("Having trouble connecting to metamask");
       }
     } catch (error) {
-      // console.log("Error minting", error);
+      console.log("Error minting", error);
       setError(error.message);
     }
   };

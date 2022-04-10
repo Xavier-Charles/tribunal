@@ -73,10 +73,11 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
                 )}
                 {isMinting ? "Minting" : "Mint"}
               </button>
-
               {minted && (
-                <p className="p-2 w-full pt-8 mt-4 text-center">
+                <p className="p-2 w-full pt-8 text-center">
                   {error ? (
+                    "Looks like something went wrong 😔."
+                  ) : (
                     <>
                       Transaction at{" "}
                       <a
@@ -87,8 +88,6 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
                         ...
                       </a>
                     </>
-                  ) : (
-                    "Looke like something went wrong 😔."
                   )}
                 </p>
               )}
