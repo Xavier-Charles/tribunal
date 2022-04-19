@@ -21,7 +21,7 @@ const DaosFromYourNFTs = ({ hasUser, userDAOsMatch }) => {
         <DaosList userDAOsMatch={userDAOsMatch} />
       ) : (
         <div className="w-full max-w-lg text-center flex justify-center my-6 mx-auto">
-          <h1 className="sm:text-base text-2xl font-mono  mb-2 text-gray-400">
+          <h1 className="text-base sm:text-base px-2 font-mono  mb-2 text-gray-400">
             {hasUser
               ? "No DAOs on Tribunal Matched Your NFTs."
               : "When You Connect Your Wallet, DAOs That Match Your NFTs Will Be Displayed Here."}{" "}

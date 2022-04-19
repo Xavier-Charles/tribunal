@@ -131,7 +131,7 @@ const Proposal = ({ _proposal, dao }) => {
                 </div>
                 <div className="flex grow items-center space-x-1">
                   <span>by </span>
-                  <span>{proposal.author}</span>
+                  <span>{truncateLongNames(proposal.author)}</span>
 
                   <div className="relative inline-block text-left h-full md:ml-2">
                     <div className="inline-flex items-center w-full h-full cursor-pointer">
@@ -168,10 +168,6 @@ const Proposal = ({ _proposal, dao }) => {
                         type={proposal.votes[key]}
                       />
                     ))}
-
-                  {/* <a className="px-4 py-3 border-t text-center block rounded-b-none md:rounded-b-md">
-                <span>See more</span>
-              </a> */}
                 </div>
               </div>
             </div>
@@ -191,7 +187,7 @@ const Proposal = ({ _proposal, dao }) => {
          *
          */}
       </div>
-      {proposal && <VoteResults proposal={proposal}/>}
+      {proposal && <VoteResults proposal={proposal} />}
     </div>
   );
 };
