@@ -5,8 +5,8 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 
 const navigation = [
-  { name: "Create A DAO", href: "#", current: false },
-  // { name: "Team", href: "#", current: false },
+  { name: "Create A Tribunal", href: "/tribunal/new", current: false },
+  { name: "All Tribunals", href: "/#all-tribunals", current: false },
   // { name: "Projects", href: "#", current: false },
   // { name: "Calendar", href: "#", current: false },
 ];
@@ -45,7 +45,7 @@ const Navbar = () => {
                         alt="logo"
                       />
                     </div>
-                    <span className="text-xl font-serif">Tribunal</span>
+                    <span className="text-xl font-serif">Tribunals</span>
                   </Link>
                 </div>
                 <div className="hidden sm:block sm:ml-6">

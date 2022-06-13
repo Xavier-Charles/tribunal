@@ -8,7 +8,7 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
   };
 
   return (
-    <section className="text-gray-600 body-font relative pt-28 lg:pt-36">
+    <section className="text-gray-600 body-font relative pt-28 lg:pt-24">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-20">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-6 md:mb-8 text-gray-900">
@@ -94,7 +94,7 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
             </div>
             <div className="p-2 w-full pt-4 mt-12 border-t border-gray-200 text-center">
               <Link to="/" className="text-gold font-serif text-lg">
-                Tribunal
+                Tribunals
               </Link>
             </div>
           </div>

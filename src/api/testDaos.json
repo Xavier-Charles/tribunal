@@ -2,9 +2,9 @@
   {
     "id": 1,
     "logo": "https://i.imgur.com/qV3cPNV.png",
-    "title": "Tribunal test Dao",
-    "desc": "The Tribunal DAO governs the upgrades, projects and decisions and features for the Tribunal App.",
-    "slug": "tribunal",
+    "title": "Tribunals test Dao",
+    "desc": "The Tribunals DAO governs the upgrades, projects and decisions and features for the Tribunals App.",
+    "slug": "tribunals",
     "contract_address": "0x64DA298bDd8200482b821951308eAc0732d3A5e8"
   },
   {

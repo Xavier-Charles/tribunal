@@ -44,7 +44,7 @@ const DaosContainer = ({ type }) => {
   return (
     <>
       <Navbar />
-      <div id="content" className="pb-6 pt-28 lg:pt-36">
+      <div id="content" className="pb-6 pt-28 lg:pt-24">
         <div className="px-0 md:px-4 max-w-7xl mx-auto">
           <SideBar dao={dao} type={type} />
           {type === "about" ? (
