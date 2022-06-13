@@ -1,7 +1,7 @@
 import React from 'react'
 import ConnectWallet from './ConnectWallet';
 
-const Hero = ({ handleAuthenticate }) => {
+const Hero = ({ handleAuthenticate, handleUAuthenticate }) => {
   return (
     <section className="text-gray-600 body-font pt-28 lg:pt-36">
       <div className="container max-w-7xl px-5 py-24 mx-auto">
@@ -13,7 +13,10 @@ const Hero = ({ handleAuthenticate }) => {
             NFT-based governance for Daos
           </p>
         </div>
-        <ConnectWallet handleAuthenticate={handleAuthenticate} />
+        <ConnectWallet
+          handleUAuthenticate={handleUAuthenticate}
+          handleAuthenticate={handleAuthenticate}
+        />
       </div>
     </section>
   );

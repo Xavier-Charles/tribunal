@@ -8,7 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.4",
+    "@heroicons/react": "^1.0.6",
     "@reduxjs/toolkit": "^1.8.1",
+    "@uauth/moralis": "^1.0.1",
     "@walletconnect/web3-provider": "^1.7.7",
     "ethers": "^5.6.2",
     "moment": "^2.29.2",
@@ -22,6 +25,7 @@
     "remove-markdown": "^0.3.0"
   },
   "devDependencies": {
+    "@honkhonk/vite-plugin-svgr": "^1.1.0",
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.4",
     "postcss": "^8.4.12",
