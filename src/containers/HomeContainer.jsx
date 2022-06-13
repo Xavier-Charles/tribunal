@@ -7,12 +7,7 @@ import DaosFromYourNFTs from "../components/DaosFromYourNFTs";
 import AllDaos from "../components/AllDaos";
 import Daos from "../api/testDaos.json";
 import CheckNFTs from "../api/checkNFTs";
-import {
-  createProposal,
-  getProposal,
-  getProposals,
-  updateProposal,
-} from "../api/proposals";
+import { uauth } from "../api/unstoppableAuth";
 
 /**
  *
@@ -41,10 +36,24 @@ const HomeContainer = () => {
     }
   };
 
+  const handleUAuthenticate = async () => {
+    try {
+      const UDuser = await Moralis.authenticate(uauth);
+
+      console.log(UDuser);
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <Navbar />
-      <Hero handleAuthenticate={handleAuthenticate} />
+      <Hero
+        handleAuthenticate={handleAuthenticate}
+        handleUAuthenticate={handleUAuthenticate}
+      />
       <DaosFromYourNFTs userDAOsMatch={userDAOsMatch} />
       <AllDaos />
     </>
