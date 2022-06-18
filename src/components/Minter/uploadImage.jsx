@@ -85,9 +85,6 @@ const FileUploader = ({ fileUrl, setFileUrl }) => {
 
   return (
     <div className="relative">
-      <label className="block text-sm font-medium text-gray-700">
-        Cover photo
-      </label>
       {dragActive && (
         <div
           className="absolute top-0 left-0 right-0 bottom-0 w-full h-full cursor-pointer"

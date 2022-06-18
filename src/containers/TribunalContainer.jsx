@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import { useMintNftAction } from "../api/mintNFT";
-import NewTribunalForm from "../components/NewTribunalForm";
+import NewTribunal from "../components/tribunalComponents/NewTribunal";
 
 const TribunalContainer = () => {
   const { isMinting, minted, hash, error, mintNFT } = useMintNftAction();
@@ -17,7 +17,7 @@ const TribunalContainer = () => {
           </h1>
 
           <div className="mt-20">
-            <NewTribunalForm />
+            <NewTribunal />
           </div>
         </div>
       </div>

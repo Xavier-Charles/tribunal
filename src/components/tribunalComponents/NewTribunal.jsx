@@ -1,6 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import FileUploader from "../Minter/uploadImage";
 
-const NewTribunalForm = () => {
+const NewTribunal = () => {
+  const [fileUrl, setFileUrl] = useState("");
+  const [values, setValues] = useState({
+    tribunalName: "",
+    email: "",
+    walletAddress: "",
+    mintFee: 0,
+    about: "",
+  });
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleValidate = () => {
+    const { tribunalName, email, walletAddress, mintFee, about } = values;
+    if (tribunalName && email && walletAddress && about && fileUrl !== "" && mintFee >= 0) {
+      return true;
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!handleValidate()) return;
+    console.log({
+      tribunalName,
+      email,
+      walletAddress,
+      about,
+      fileUrl,
+      mintFee,
+    });
+  };
   return (
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -21,95 +52,117 @@ const NewTribunalForm = () => {
                 <div className="grid grid-cols-6 gap-6">
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      htmlFor="tribunal-name"
+                      htmlFor="tribunalName"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Tribunal name
+                      Tribunal name*
                     </label>
                     <input
                       type="text"
-                      name="tribunal-name"
-                      id="tribunal-name"
+                      name="tribunalName"
+                      id="tribunalName"
                       autoComplete="given-name"
+                      value={values.tribunalName}
+                      onChange={handleChange}
                       className="h-[38px] px-2 focus:outline-none mt-1 focus:ring-gold border focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
-
                   <div className="col-span-6 sm:col-span-3">
                     <label
-                      htmlFor="last-name"
+                      htmlFor="email"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Tribunal NFT name (5 characters max.)
+                      Email address*
                     </label>
                     <input
                       type="text"
-                      name="token-name"
-                      id="token-name"
-                      autoComplete="tribunal-name"
+                      name="email"
+                      id="email"
+                      autoComplete="email"
+                      value={values.email}
+                      onChange={handleChange}
                       className="h-[38px] px-2 focus:outline-none mt-1 focus:ring-gold border focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
-
                   <div className="col-span-6 sm:col-span-4">
                     <label
-                      htmlFor="email-address"
+                      htmlFor="walletAddress"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Email address
+                      Wallet address*
                     </label>
                     <input
                       type="text"
-                      name="email-address"
-                      id="email-address"
-                      autoComplete="email"
+                      name="walletAddress"
+                      id="walletAddress"
+                      autoComplete="walletAddress"
+                      value={values.walletAddress}
+                      onChange={handleChange}
                       className="h-[38px] px-2 focus:outline-none mt-1 focus:ring-gold border focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                     />
                   </div>
-
-                  <div className="col-span-6 sm:col-span-5">
+                  <div className="col-span-6 sm:col-span-2">
                     <label
-                      htmlFor="street-address"
+                      htmlFor="mintFee"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Wallet address
+                      Mint Fee (in MATIC)
                     </label>
                     <input
-                      type="text"
-                      name="wallet-address"
-                      id="wallet-address"
-                      autoComplete="wallet-address"
-                      className="h-[38px] px-2 focus:outline-none mt-1 focus:ring-gold border focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                      type="number"
+                      name="mintFee"
+                      id="mintFee"
+                      min={0}
+                      autoComplete="mintFee"
+                      placeholder="Free"
+                      value={values.mintFee}
+                      onChange={handleChange}
+                      className={`${
+                        values.mintFee < 0 ? "border-red-500" : ""
+                      } h-[38px] px-2 focus:outline-none mt-1 focus:ring-gold border focus:border-gold block w-full shadow-sm sm:text-sm border-gray-300 rounded-md`}
                     />
                   </div>
-
                   <div className="col-span-6">
                     <label
                       htmlFor="about"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      About this Tribunal
+                      About this Tribunal*
                     </label>
                     <div className="mt-1">
                       <textarea
                         id="about"
                         name="about"
-                        rows={5}
+                        rows={4}
                         className="focus:outline-none px-2 py-2 shadow-sm focus:ring-gold focus:border-gold mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
                         placeholder=""
-                        defaultValue={""}
+                        value={values.about}
+                        onChange={handleChange}
                       />
                     </div>
                     <p className="mt-2 text-sm text-gray-500">
                       Brief description for this Tribunal.
                     </p>
+                  </div>{" "}
+                  <div className="col-span-6">
+                    <label
+                      htmlFor="tribunalNftName"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Tribunal NFT photo*
+                    </label>
+                    <FileUploader fileUrl={fileUrl} setFileUrl={setFileUrl} />
                   </div>
                 </div>
               </div>
               <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                 <button
                   type="submit"
-                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gold hover:bg-gold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold"
+                  className={`${
+                    handleValidate() ? "" : "opacity-30"
+                  } inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gold hover:bg-gold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold`}
+                  onClick={handleSubmit}
+                  disabled={!handleValidate()}
                 >
                   Save
                 </button>
@@ -122,4 +175,4 @@ const NewTribunalForm = () => {
   );
 };
 
-export default NewTribunalForm;
+export default NewTribunal;
