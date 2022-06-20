@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CheckNFTs from "../../api/checkNFTs";
 import { createProposal } from "../../api/proposals";
+import { authenticate } from "../../api/utils";
 import DateInput from "../DateInput";
 
 const NewProposal = ({ dao }) => {
@@ -12,18 +13,6 @@ const NewProposal = ({ dao }) => {
   const [desc, setDesc] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-
-  async function authenticate() {
-    try {
-      const user = await Moralis.authenticate({
-        signingMessage: "Verify wallet address to submit your proposal",
-      });
-      return user;
-    } catch (err) {
-      console.log(err);
-      return null;
-    }
-  }
 
   const handleSubmit = async (event) => {
     setSubmitting(true);
@@ -36,7 +25,9 @@ const NewProposal = ({ dao }) => {
       ) {
         const nfts = await CheckNFTs();
         if (nfts.length !== 0) {
-          const user = await authenticate();
+          const user = await authenticate(
+            "Verify wallet address to submit your proposal"
+          );
 
           if (user) {
             const data = {

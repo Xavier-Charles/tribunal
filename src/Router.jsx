@@ -9,6 +9,7 @@ function Router() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/tribunal/new" element={<TribunalPage />} />
+      <Route path="/tribunal/:id" element={<TribunalPage />} />
       <Route path="/mint" element={<MintPage />} />
       <Route path="/:slug/proposals" element={<DaosPage type="proposals" />} />
       <Route path="/:slug/about" element={<DaosPage type="about" />} />

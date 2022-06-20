@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useMoralis, useMoralisWeb3Api } from "react-moralis";
+// import { useMoralis, useMoralisWeb3Api } from "react-moralis";
 import "./home.css";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";

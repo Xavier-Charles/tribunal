@@ -1,8 +1,9 @@
+
 const API = import.meta.env.VITE_TRIBUNAL_API;
 
-export const getProposals = async () => {
+export const getTribunals = async () => {
   try {
-    const res = await fetch(`${API}proposals`, {
+    const res = await fetch(`${API}tribunals`, {
       method: "GET",
     });
 
@@ -16,9 +17,9 @@ export const getProposals = async () => {
   }
 };
 
-export const getProposal = async (id) => {
+export const getTribunal = async (id) => {
   try {
-    const res = await fetch(`${API}proposal/${id}`, {
+    const res = await fetch(`${API}tribunal/${id}`, {
       method: "GET",
     });
 
@@ -32,9 +33,9 @@ export const getProposal = async (id) => {
   }
 };
 
-export const createProposal = async (data) => {
+export const createTribunal = async (data) => {
   try {
-    const res = await fetch(`${API}proposal`, {
+    const res = await fetch(`${API}tribunal`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -50,9 +51,9 @@ export const createProposal = async (data) => {
   }
 };
 
-export const updateProposal = async (id, data) => {
+export const updateTribunal = async (id, data) => {
   try {
-    const res = await fetch(`${API}proposal/${id}`, {
+    const res = await fetch(`${API}tribunal/${id}`, {
       headers: { "Content-Type": "application/json" },
       method: "PUT",
       body: JSON.stringify(data),

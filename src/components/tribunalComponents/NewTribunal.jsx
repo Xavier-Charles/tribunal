@@ -1,8 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createTribunal } from "../../api/tribunals";
+import { authenticate } from "../../api/utils";
 import FileUploader from "../Minter/uploadImage";
 
 const NewTribunal = () => {
+  const navigate = useNavigate()
   const [fileUrl, setFileUrl] = useState("");
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
   const [values, setValues] = useState({
     tribunalName: "",
     email: "",
@@ -16,22 +23,60 @@ const NewTribunal = () => {
   };
   const handleValidate = () => {
     const { tribunalName, email, walletAddress, mintFee, about } = values;
-    if (tribunalName && email && walletAddress && about && fileUrl !== "" && mintFee >= 0) {
+    if (
+      tribunalName &&
+      email &&
+      walletAddress &&
+      about &&
+      fileUrl !== "" &&
+      mintFee >= 0
+    ) {
       return true;
     }
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!handleValidate()) return;
-    console.log({
-      tribunalName,
-      email,
-      walletAddress,
-      about,
-      fileUrl,
-      mintFee,
-    });
+    setSubmitting(true);
+    try {
+      if (!handleValidate()) return;
+      const user = await authenticate(
+        "Verify wallet address to start your Tribunal"
+      );
+
+      if (user) {
+        const { tribunalName, email, walletAddress, mintFee, about } = values;
+        const tribunal = {
+          tribunalName,
+          email,
+          walletAddress,
+          mintFee,
+          about,
+          fileUrl,
+          creator: user.attributes.ethAddress,
+        };
+        const response = await createTribunal(tribunal);
+        if (response) {
+          setSuccess("Tribunal created successfully");
+          setTimeout(() => {
+            setSuccess(null);
+            console.log(response);
+            navigate(`/tribunal/${response._id}`);
+          }, 5000);
+        }
+      } else {
+        setError("Wallet authentication failed.");
+        setTimeout(() => setError(null), 5000);
+      }
+    } catch (err) {
+      console.log(err);
+      setError(err.message);
+      setTimeout(() => setError(null), 5000);
+    }
+
+    setSubmitting(false);
   };
+
   return (
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -89,7 +134,7 @@ const NewTribunal = () => {
                       htmlFor="walletAddress"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Wallet address*
+                      Wallet address (Mint Fee is sent here)*
                     </label>
                     <input
                       type="text"
@@ -155,7 +200,7 @@ const NewTribunal = () => {
                   </div>
                 </div>
               </div>
-              <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+              <div className="px-4 py-3 bg-gray-50 text-center sm:px-6">
                 <button
                   type="submit"
                   className={`${
@@ -164,8 +209,26 @@ const NewTribunal = () => {
                   onClick={handleSubmit}
                   disabled={!handleValidate()}
                 >
-                  Save
+                  {submitting ? "Creating..." : "Create"}
                 </button>
+                {(success || error) && (
+                  <>
+                    <p
+                      className={`${
+                        error ? "" : "hidden"
+                      }text-center text-sm text-red-500 mt-2`}
+                    >
+                      {error}
+                    </p>
+                    <p
+                      className={`${
+                        success ? "" : "hidden"
+                      }text-center text-sm text-green-500 mt-2`}
+                    >
+                      {success}
+                    </p>
+                  </>
+                )}
               </div>
             </div>
           </form>
