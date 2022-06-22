@@ -8,7 +8,7 @@ const CheckNFTs = async (contract_address) => {
   // const chain = ropsten // use this later
   try {
     const res = await fetch(
-      `https://deep-index.moralis.io/api/v2/${address}/nft/${contractAddress}?chain=ropsten&format=decimal`,
+      `https://deep-index.moralis.io/api/v2/${address}/nft/${contractAddress}?chain=polygon&format=decimal`,
       {
         method: "GET",
         headers: {

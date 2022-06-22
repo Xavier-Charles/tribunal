@@ -4,29 +4,28 @@ import { useState } from "react";
 import contractABI from "./tribunalABI.json";
 
 const contract_address = import.meta.env.VITE_TEST_CONTRACT_ADDRESS;
-const token_uri = import.meta.env.VITE_TEST_TOKEN_URI;
+const token_uri = import.meta.env.VITE_TEST_TOKEN_URI; //! TODO: CHange here
 
 export const ConnectWallet = async () => {
   try {
     const { ethereum } = window;
 
     if (!ethereum) {
-      // console.log("Metamask not detected");
+      console.log("Metamask not detected");
       return;
     }
     let chainId = await ethereum.request({ method: "eth_chainId" });
     // console.log("Connected to chain:" + chainId);
 
-    const ropstenChainId = "0x3";
+    // const ropstenChainId = "0x3";
 
-    if (chainId !== ropstenChainId) {
-      alert("You are not connected to the Ropsten Testnet!");
-      return;
-    }
+    // if (chainId !== ropstenChainId) {
+    //   alert("You are not connected to the Ropsten Testnet!");
+    //   return;
+    // }
 
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
-    // console.log("Found account", accounts[0]);
     return accounts[0];
   } catch (error) {
     console.log("Error connecting to metamask", error);

@@ -1,5 +1,4 @@
 import React, { useState, createContext } from "react";
-// import { useMoralis, useMoralisWeb3Api } from "react-moralis";
 
 /**
  *
@@ -7,17 +6,18 @@ import React, { useState, createContext } from "react";
  *
  */
 
-export const MoralisInitContext = createContext(null);
+export const UserContext = createContext(null);
 const appId = import.meta.env.VITE_MORALIS_APP_ID;
 const serverUrl = import.meta.env.VITE_MORALIS_SERVER_URL;
 
-const MoralisInitProvider = ({ children }) => {
-  Moralis.start({ serverUrl, appId });
+const UserContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [UdUser, setUdUser] = useState(null);
 
   return (
-    <MoralisInitContext.Provider value="">
+    <UserContext.Provider value={{ user, setUser, UdUser, setUdUser }}>
       {children}
-    </MoralisInitContext.Provider>
+    </UserContext.Provider>
   );
 };
-export default MoralisInitProvider;
+export default UserContextProvider;
