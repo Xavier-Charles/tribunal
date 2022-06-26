@@ -9,6 +9,7 @@ import AboutComponent from "../components/AboutComponent";
 import NewProposal from "../components/ProposalComponents/NewProposal";
 import Proposal from "../components/ProposalComponents/Proposal";
 import { getProposals } from "../api/proposals";
+import { scrollToTop } from "../api/utils";
 
 const DaosContainer = ({ type }) => {
   const { slug, id } = useParams();
@@ -18,6 +19,7 @@ const DaosContainer = ({ type }) => {
   const dao = Daos.find((daoObj) => daoObj.slug === slug);
 
   useEffect(() => {
+    scrollToTop();
     let isSubscribed = true;
     if (isSubscribed)
       (async () => {

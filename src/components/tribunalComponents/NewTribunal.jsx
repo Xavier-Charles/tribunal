@@ -5,7 +5,7 @@ import { authenticate } from "../../api/utils";
 import FileUploader from "../Minter/uploadImage";
 
 const NewTribunal = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [fileUrl, setFileUrl] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -40,9 +40,9 @@ const NewTribunal = () => {
     setSubmitting(true);
     try {
       if (!handleValidate()) return;
-      const user = await authenticate(
-        "Verify wallet address to start your Tribunal"
-      );
+      const user = await authenticate({
+        signingMessage: "Verify wallet address to start your Tribunal",
+      });
 
       if (user) {
         const { tribunalName, email, walletAddress, mintFee, about } = values;
