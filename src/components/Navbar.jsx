@@ -1,8 +1,9 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/png/logo.png";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
+import { UserContext } from "../context/UserContext";
 
 const navigation = [
   { name: "Create A Tribunal", href: "/tribunal/new", current: false },
@@ -15,6 +16,8 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Navbar = () => {
+  const { user, udUser, signOut, authenticated } = useContext(UserContext);
+
   return (
     <Disclosure as="nav" className="">
       {({ open }) => (
@@ -71,11 +74,27 @@ const Navbar = () => {
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <Menu as="div" className="ml-3 relative">
                   <div>
-                    <Menu.Button className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                    <Menu.Button
+                      className={`${
+                        authenticated ? "border-none" : "bg-cadet"
+                      } border flex text-sm rounded-full focus:outline-none focus:ring focus:ring-offset-1 focus:ring-offset-cadet focus:ring-white ease-in-out`}
+                    >
+                      {authenticated && (
+                        <p
+                          className="hover:text-gray-600 rounded
+                          px-3 py-2 text-black font-serif text-base font-medium ease-in-out"
+                        >
+                          {user.name}
+                        </p>
+                      )}
                       <span className="sr-only">Open user menu</span>
                       <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        className="h-7 w-7 rounded-full self-center m-[1px] bg-white"
+                        src={
+                          udUser
+                            ? "https://i.imgur.com/yZBav17.png"
+                            : "https://i.imgur.com/PaecHIK.png"
+                        }
                         alt=""
                       />
                     </Menu.Button>
@@ -106,13 +125,16 @@ const Navbar = () => {
                       <Menu.Item>
                         {({ active }) => (
                           <a
-                            href="#"
+                            href={authenticated ? undefined: "/#sign-in"}
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
+                            onClick={() => {
+                              signOut();
+                            }}
                           >
-                            Sign out
+                            {authenticated ? "Sign Out" : "Sign In"}
                           </a>
                         )}
                       </Menu.Item>

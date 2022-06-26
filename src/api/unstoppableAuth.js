@@ -18,7 +18,10 @@ UAuthMoralisConnector.setUAuthOptions({
   connectors: { injected, walletconnect },
 });
 
-export const uauth = {connector: UAuthMoralisConnector};
+export const uauth = {
+  connector: UAuthMoralisConnector,
+  signingMessage: "Sign in to Tribunal",
+};
 
 
 const connectors = {
