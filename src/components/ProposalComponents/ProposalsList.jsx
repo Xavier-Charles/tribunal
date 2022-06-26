@@ -1,6 +1,5 @@
 import moment from "moment";
 import React from "react";
-import truncateLongNames from "../../utils/truncateLongNames";
 import ProposalCard from "./ProposalCard";
 import ProposalCardskeleton from "./ProposalCardskeleton";
 
@@ -17,7 +16,10 @@ const ProposalsList = ({ proposals, dao }) => {
       moment(proposal.endDate).isBefore(moment())
         ? closed.push(proposal)
         : open.push(proposal);
-      proposal.author = truncateLongNames(proposal.author);
+      proposal.author = truncateWithEllipsis(
+        proposal.author,
+        8
+      );
     });
     closed.sort(sortFunction);
     open.sort(sortFunction);

@@ -2,7 +2,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getProposal } from "../../api/proposals";
-import truncateLongNames from "../../utils/truncateLongNames";
+import { truncateWithEllipsis } from "../../api/utils";
 import CastVote from "../CastVote";
 import Tag from "../Tag";
 import ProposalSkeleton from "./ProposalSkeleton";
@@ -46,7 +46,9 @@ const Proposal = ({ _proposal, dao }) => {
                 }}
               />
             </span>
-            <span className="w-full">{truncateLongNames(name)}</span>
+            <span className="w-full">
+              {truncateWithEllipsis(proposal.author, 8)}
+            </span>
           </a>
         </div>
       </span>
@@ -131,7 +133,7 @@ const Proposal = ({ _proposal, dao }) => {
                 </div>
                 <div className="flex grow items-center space-x-1">
                   <span>by </span>
-                  <span>{truncateLongNames(proposal.author)}</span>
+                  <span>{truncateWithEllipsis(proposal.author, 8)}</span>
 
                   <div className="relative inline-block text-left h-full md:ml-2">
                     <div className="inline-flex items-center w-full h-full cursor-pointer">

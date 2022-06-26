@@ -25,9 +25,9 @@ const NewProposal = ({ dao }) => {
       ) {
         const nfts = await CheckNFTs();
         if (nfts.length !== 0) {
-          const user = await authenticate(
-            "Verify wallet address to submit your proposal"
-          );
+          const user = await authenticate({
+            signingMessage: "Verify wallet address to submit your proposal",
+          });
 
           if (user) {
             const data = {
