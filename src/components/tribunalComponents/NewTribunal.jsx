@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCreateTribunalAction } from "../../api/createTribunal";
 import { createTribunal } from "../../api/tribunals";
-import { authenticate } from "../../api/utils";
+import { authenticate, truncateWithEllipsis } from "../../api/utils";
 import FileUploader from "../Minter/uploadImage";
+import { UserContext } from "../../context/UserContext";
+import { useEffect } from "react";
+import { useCallback } from "react";
 
 const NewTribunal = () => {
   const navigate = useNavigate();
+  const {
+    isCreating,
+    created,
+    hash: createTRibHash,
+    error: createTRibError,
+    createTrib,
+    newTrib,
+  } = useCreateTribunalAction();
+  const { user, authenticated } = useContext(UserContext);
+
   const [fileUrl, setFileUrl] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [hash, setHash] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [values, setValues] = useState({
     tribunalName: "",
@@ -39,13 +54,18 @@ const NewTribunal = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      if (!handleValidate()) return;
-      const user = await authenticate({
+      if (!handleValidate() || !user) return;
+
+      const ver = await authenticate({
         signingMessage: "Verify wallet address to start your Tribunal",
       });
 
-      if (user) {
+      if (ver) {
+        const { address, name } = user;
         const { tribunalName, email, walletAddress, mintFee, about } = values;
+
+        const newTribAdd = await createTrib(walletAddress, fileUrl, mintFee);
+
         const tribunal = {
           tribunalName,
           email,
@@ -53,14 +73,16 @@ const NewTribunal = () => {
           mintFee,
           about,
           fileUrl,
-          creator: user.attributes.ethAddress,
+          creator: address,
+          creatorName: name,
+          address: newTribAdd,
         };
+
         const response = await createTribunal(tribunal);
         if (response) {
           setSuccess("Tribunal created successfully");
           setTimeout(() => {
             setSuccess(null);
-            console.log(response);
             navigate(`/tribunal/${response._id}`);
           }, 5000);
         }
@@ -77,6 +99,16 @@ const NewTribunal = () => {
     setSubmitting(false);
   };
 
+  useEffect(() => {
+    if (user) setValues((prev) => ({ ...prev, walletAddress: user.address }));
+  }, [user]);
+
+  useEffect(() => {
+    if (createTRibError) setError(createTRibError.message);
+    // if (isCreating) setSubmitting(true);
+    if (created && createTRibHash) setHash(createTRibHash);
+  }, [isCreating, created, createTRibHash, createTRibError]);
+
   return (
     <div className="mt-10 sm:mt-0">
       <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -86,7 +118,8 @@ const NewTribunal = () => {
               Tribunal Information
             </h3>
             <p className="mt-1 text-sm text-gray-600">
-              Use a wallet address where you can receive mail. ## Change text
+              Tribunal NFTs (TRIB) are minted on the Polygon. Please switch to
+              Polygon Network to continue
             </p>
           </div>
         </div>
@@ -207,11 +240,11 @@ const NewTribunal = () => {
                     handleValidate() ? "" : "opacity-30"
                   } inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gold hover:bg-gold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold`}
                   onClick={handleSubmit}
-                  disabled={!handleValidate()}
+                  // disabled={!handleValidate()}
                 >
                   {submitting ? "Creating..." : "Create"}
                 </button>
-                {(success || error) && (
+                {(success || error || hash) && (
                   <>
                     <p
                       className={`${
@@ -227,6 +260,17 @@ const NewTribunal = () => {
                     >
                       {success}
                     </p>
+                    <a
+                      href={`https://polygonscan.com/tx/${hash}`}
+                      className={`${
+                        hash ? "" : "hidden"
+                      }text-center text-sm text-gold mt-2`}
+                    >
+                      {truncateWithEllipsis(
+                        `https://polygonscan.com/tx/${hash}`,
+                        26
+                      )}
+                    </a>
                   </>
                 )}
               </div>
