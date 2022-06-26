@@ -8,9 +8,13 @@ export async function authenticate(props) {
   }
 }
 
-export const truncateWithEllipsis = (s, n) => {
+export const truncateWithEllipsis = (s, n, type) => {
   const maxLen = n !== undefined ? n : 12;
+  
   if (s.length > maxLen) {
+    if (type === "end") {
+      return `${s.substr(0, maxLen)}...`;
+    }
     return `${s.substr(0, Math.floor(maxLen / 2))}...${s.substr(
       s.length - Math.floor(maxLen / 2)
     )}`;

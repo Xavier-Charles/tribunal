@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import HomeContainer from "../containers/HomeContainer";
+import TribunalsContextProvider from "../context/TribunalsContext";
 
 function Home() {
   const location = useLocation();
@@ -15,7 +16,11 @@ function Home() {
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     }
   }, [location]);
-  return <HomeContainer />;
+  return (
+    <TribunalsContextProvider>
+      <HomeContainer />
+    </TribunalsContextProvider>
+  );
 }
 
 export default Home;

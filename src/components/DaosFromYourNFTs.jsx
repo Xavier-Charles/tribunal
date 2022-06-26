@@ -10,9 +10,9 @@ const DaosFromYourNFTs = ({ hasUser, userDAOsMatch }) => {
           <div className="flex flex-wrap w-full mb-20">
             <div className="lg:w-1/2 w-full mb-6 lg:mb-0">
               <h1 className="sm:text-3xl text-2xl font-serif font-medium title-font mb-2 text-gray-900">
-                Daos From Your NFTs
+                Tribunals From Your NFTs
               </h1>
-              <div className="h-1 w-44 bg-gold rounded"></div>
+              <div className="h-1 w-44 sm:w-60 bg-gold rounded"></div>
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-
 const API = import.meta.env.VITE_TRIBUNAL_API;
 
 export const getTribunals = async () => {
@@ -9,7 +8,15 @@ export const getTribunals = async () => {
 
     const content = (await res.json()).data;
 
-    return content;
+    return content.map((c) => ({
+      ...c,
+      id: c._id,
+      logo: c.fileUrl,
+      title: c.tribunalName,
+      desc: c.about,
+      slug: c._id,
+      contract_address: c.address,
+    }));
   } catch (err) {
     console.log({ err });
 

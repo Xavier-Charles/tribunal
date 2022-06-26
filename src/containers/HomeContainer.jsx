@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./home.css";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
@@ -7,6 +7,7 @@ import AllDaos from "../components/AllDaos";
 // import CheckNFTs from "../api/checkNFTs";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
+import { TribunalsContext } from "../context/TribunalsContext";
 
 /**
  *
@@ -16,6 +17,7 @@ import { UserContext } from "../context/UserContext";
 
 const HomeContainer = () => {
   const { handleAuthenticate, handleUDAuthenticate } = useContext(UserContext);
+  const {tribunals} = useContext(TribunalsContext)
   const [userDAOsMatch, setUserDAOsMatch] = useState([]);
   
 
@@ -27,7 +29,7 @@ const HomeContainer = () => {
         handleUAuthenticate={handleUDAuthenticate}
       />
       <DaosFromYourNFTs userDAOsMatch={userDAOsMatch} />
-      <AllDaos />
+      <AllDaos tribunals={tribunals} />
     </>
   );
 };
