@@ -1,5 +1,6 @@
 import React, { useState, createContext, useEffect } from "react";
 import { getTribunals } from "../api/tribunals";
+import Daos from "../api/testDaos.json";
 import { authenticate, scrollToTop, truncateWithEllipsis } from "../api/utils";
 
 /**
@@ -11,12 +12,12 @@ import { authenticate, scrollToTop, truncateWithEllipsis } from "../api/utils";
 export const TribunalsContext = createContext(null);
 
 const TribunalsContextProvider = ({ children }) => {
-  const [tribunals, setTribunals] = useState(null);
+  const [tribunals, setTribunals] = useState(Daos);
 
   useEffect(() => {
     (async () => {
       const data = await getTribunals();
-      setTribunals(data);
+      setTribunals((prev) => [...prev, ...data]);
     })();
   }, []);
 

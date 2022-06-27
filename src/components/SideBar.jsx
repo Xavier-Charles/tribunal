@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 const SideBar = ({ dao, type }) => {
   const navigate = useNavigate();
 
-  const handleJoin = (isTribunal) => {
-    if (isTribunal) navigate("/mint");
+  const handleJoin = (slug) => {
+    navigate(`/mint/${slug}`);
   };
 
   const SideBarLink = ({ name, url, active }) => (
@@ -50,13 +50,13 @@ const SideBar = ({ dao, type }) => {
               <div className="mb-[12px] text-skin-text">12K members</div>
               <button
                 type="button"
-                onClick={() => handleJoin(dao.slug === "tribunals")}
+                onClick={() => handleJoin(dao.slug)}
                 className={`${
-                  dao.slug === "tribunals"
+                  dao.creator
                     ? "hover:bg-yellow-600 cursor-pointer"
                     : " opacity-30"
                 } text-cadet bg-gold border-0 py-1 px-0 focus:outline-none rounded mb-4 group w-[120px]`}
-                disabled={dao.slug !== "tribunals"}
+                disabled={!dao.creator}
               >
                 Join
               </button>

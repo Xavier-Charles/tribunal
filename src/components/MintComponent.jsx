@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useMintNftAction } from "../api/mintNFT";
 
-const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
+const MintComponent = ({ isMinting, minted, hash, error, mintNFT, dao }) => {
   const handleClick = async () => {
     await mintNFT();
   };
@@ -12,38 +11,13 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-20">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-6 md:mb-8 text-gray-900">
-            Mint a test NFT
+            Mint a {dao.title} NFT
           </h1>
 
           <h3 className="lg:w-2/3 max-w-lg mx-auto leading-relaxed text-base">
-            Please switch to the <span className="font-bold">Ropsten</span> Test
+            Please switch to the <span className="font-bold">Polygon</span>{" "}
             Network before miniting to your{" "}
-            <span className="font-bold">Metamask</span> wallet. Get Ropsten
-            Ether{" "}
-            <a
-              target="_blank"
-              href="https://faucet.metamask.io/"
-              className="underline text-gold"
-            >
-              here
-            </a>
-            ,{" "}
-            <a
-              target="_blank"
-              href="https://faucet.dimensions.network/"
-              className="underline text-gold"
-            >
-              here
-            </a>
-            , or{" "}
-            <a
-              target="_blank"
-              href="https://faucet.egorfine.com/"
-              className="underline text-gold"
-            >
-              here
-            </a>
-            .
+            <span className="font-bold">Metamask</span> wallet.
           </h3>
         </div>
         <div className="lg:w-1/2 md:w-2/3 mx-auto">
@@ -82,9 +56,13 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT }) => {
                       Transaction at{" "}
                       <a
                         className="text-gold hover:text-yellow-600"
-                        href={`https://ropsten.etherscan.io/tx/${hash}`}
+                        href={`https://polygonscan.com/tx/${hash}`}
+                        target="_blank"
                       >
-                        {`https://ropsten.etherscan.io/tx/${hash}`.slice(0, 40)}
+                        {`https://https://polygonscan.com/tx/${hash}`.slice(
+                          0,
+                          40
+                        )}
                         ...
                       </a>
                     </>

@@ -1,5 +1,6 @@
 import moment from "moment";
 import React from "react";
+import { truncateWithEllipsis } from "../../api/utils";
 import ProposalCard from "./ProposalCard";
 import ProposalCardskeleton from "./ProposalCardskeleton";
 

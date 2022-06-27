@@ -1,9 +1,9 @@
 import React from "react";
 import { ethers } from "ethers";
 import { useState } from "react";
-import contractABI from "./tribunalABI.json";
+import contractABI from "./createTribunalABI.json";
 
-const contract_address = import.meta.env.VITE_TEST_CONTRACT_ADDRESS;
+const og_contract_address = import.meta.env.VITE_CREATE_TRIB_CONTRACT_ADDRESS;
 const token_uri = import.meta.env.VITE_TEST_TOKEN_URI; //! TODO: CHange here
 
 export const ConnectWallet = async () => {
@@ -34,7 +34,7 @@ export const ConnectWallet = async () => {
 };
 
 // Creates transaction to mint NFT on clicking Mint button
-export const useMintNftAction = () => {
+export const useMintNftAction = (contract_address) => {
   const [isMinting, setisMinting] = useState(false);
   const [minted, setMinted] = useState(false);
   const [hash, setHash] = useState(null);
@@ -43,20 +43,31 @@ export const useMintNftAction = () => {
   const mintNFT = async () => {
     try {
       const { ethereum } = window;
+      console.log("called 1");
       if (ethereum) {
-        const userAddress = ConnectWallet();
+        const userAddress = await ConnectWallet();
+        console.log(userAddress);
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = await provider.getSigner();
+        console.log("called 2");
 
         const nftContract = new ethers.Contract(
-          contract_address,
-          contractABI.abi, // use list due to https://github.com/ethers-io/ethers.js/issues/1238
+          og_contract_address,
+          contractABI, // use list due to https://github.com/ethers-io/ethers.js/issues/1238
           signer
         );
 
-        const nftTx = await nftContract.mintNFT(userAddress, token_uri, {
-          gasLimit: 500_000,
-        });
+        console.log(contract_address);
+
+        const nftTx = await nftContract.mintChildNFT(
+          contract_address,
+          userAddress,
+          {
+            gasLimit: 5_000_000,
+            value: ethers.utils.parseEther("1"),
+          }
+        );
+        console.log("called 3");
 
         //the transaction
         // console.log("Minting....", nftTx.hash);
@@ -68,6 +79,8 @@ export const useMintNftAction = () => {
 
         setHash(nftTx.hash);
         setisMinting(false);
+        console.log("called 4");
+
         // console.log(
         //   `Mined, see transaction: https://Ropsten.etherscan.io/tx/${nftTx.hash}`
         // );

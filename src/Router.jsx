@@ -11,6 +11,7 @@ function Router() {
       <Route path="/tribunal/new" element={<TribunalPage />} />
       <Route path="/tribunal/:id" element={<TribunalPage />} />
       <Route path="/mint" element={<MintPage />} />
+      <Route path="/mint/:slug" element={<MintPage />} />
       <Route path="/:slug/proposals" element={<DaosPage type="proposals" />} />
       <Route path="/:slug/about" element={<DaosPage type="about" />} />
       <Route path="/:slug/proposals/new" element={<DaosPage type="new" />} />
