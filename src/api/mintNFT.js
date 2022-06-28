@@ -61,7 +61,7 @@ export const useMintNftAction = (dao) => {
           userAddress,
           {
             gasLimit: 5_000_000,
-            value: ethers.utils.parseEther(dao.mintFee),
+            value: ethers.utils.parseEther(String(dao.mintFee)),
           }
         );
         console.log("called 3");

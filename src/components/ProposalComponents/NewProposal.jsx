@@ -26,9 +26,10 @@ const NewProposal = ({ dao }) => {
         startDate.target.value.length > 0 &&
         endDate.target.value.length > 0
       ) {
-        const hasNFt = await VerifyNFTs(dao.contract_address, user.address);
-        if (hasNFt) {
-          if (user && dao) {
+        if (user && dao) {
+          const hasNFt = await VerifyNFTs(dao.contract_address, user.address);
+
+          if (hasNFt) {
             const data = {
               title: title.target.value,
               desc: desc.target.value,
@@ -53,7 +54,7 @@ const NewProposal = ({ dao }) => {
             setTimeout(() => setError(null), 5000);
           }
         } else {
-          setError("No Matching NFTs for this DAO in your wallet.");
+          setError("No NFTs for this Tribunal in your wallet. Are you signed in?");
           setTimeout(() => setError(null), 5000);
         }
       } else {
