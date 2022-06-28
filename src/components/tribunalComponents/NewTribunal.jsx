@@ -34,7 +34,7 @@ const NewTribunal = () => {
   });
 
   const handleChange = (e) => {
-    if ((e.target.name = "mintFee"))
+    if ((e.target.name === "mintFee"))
       setValues({ ...values, [e.target.name]: Math.round(e.target.value, 10) });
     else setValues({ ...values, [e.target.name]: e.target.value });
   };
