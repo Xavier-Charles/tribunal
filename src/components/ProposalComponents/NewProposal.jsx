@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CheckNFTs, { VerifyNFTs } from "../../api/checkNFTs";
 import { createProposal } from "../../api/proposals";
 import { authenticate } from "../../api/utils";
@@ -7,6 +7,7 @@ import { UserContext } from "../../context/UserContext";
 import DateInput from "../DateInput";
 
 const NewProposal = ({ dao }) => {
+  const navigate  = useNavigate()
   const { user } = useContext(UserContext);
 
   const [submitting, setSubmitting] = useState(false);
@@ -20,45 +21,55 @@ const NewProposal = ({ dao }) => {
   const handleSubmit = async (event) => {
     setSubmitting(true);
     try {
-      if (
-        title.target.value.length > 0 &&
-        desc.target.value.length > 0 &&
-        startDate.target.value.length > 0 &&
-        endDate.target.value.length > 0
-      ) {
-        if (user && dao) {
-          const hasNFt = await VerifyNFTs(dao.contract_address, user.address);
+      if (title.target && desc.target && startDate.target && endDate.target) {
+        if (
+          title.target.value.length > 0 &&
+          desc.target.value.length > 0 &&
+          startDate.target.value.length > 0 &&
+          endDate.target.value.length > 0
+        ) {
+          if (user && dao) {
+            const hasNFt = await VerifyNFTs(dao.contract_address, user.address);
 
-          if (hasNFt) {
-            const data = {
-              title: title.target.value,
-              desc: desc.target.value,
-              startDate: startDate.target.value,
-              endDate: endDate.target.value,
-              author: user.address,
-              authorName: user.name,
-              votes: {},
-              tribunalName: dao.tribunalName,
-              tribunalId: dao._id,
-              tribunalAddress: dao.contract_address,
-            };
-            const response = await createProposal(data);
-            if (response) {
-              setSuccess("Proposal created successfully");
-              setTimeout(() => setSuccess(null), 5000);
+            if (hasNFt) {
+              const data = {
+                title: title.target.value,
+                desc: desc.target.value,
+                startDate: startDate.target.value,
+                endDate: endDate.target.value,
+                author: user.address,
+                authorName: user.name,
+                votes: {},
+                tribunalName: dao.tribunalName,
+                tribunalId: dao._id,
+                tribunalAddress: dao.contract_address,
+              };
+              const response = await createProposal(data);
+              if (response) {
+                setSuccess("Proposal created successfully");
+                setTimeout(() => setSuccess(null), 5000);
+                setTimeout(() => {
+                  navigate(`/${dao._id}/proposals`)
+                }, 5000);
+              }
+
+              event.preventDefault();
+            } else {
+              setError("Wallet authentication failed.");
+              setTimeout(() => setError(null), 5000);
             }
-
-            event.preventDefault();
           } else {
-            setError("Wallet authentication failed.");
+            setError(
+              "No NFTs for this Tribunal in your wallet. Are you signed in?"
+            );
             setTimeout(() => setError(null), 5000);
           }
         } else {
-          setError("No NFTs for this Tribunal in your wallet. Are you signed in?");
+          setError("A field is empty. All fields are required.");
           setTimeout(() => setError(null), 5000);
         }
       } else {
-        setError("A field is empty. All fields are required.");
+        setError("All fields are required.");
         setTimeout(() => setError(null), 5000);
       }
     } catch (err) {
