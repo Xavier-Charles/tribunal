@@ -4,7 +4,6 @@ import { useState } from "react";
 import contractABI from "./createTribunalABI.json";
 
 const og_contract_address = import.meta.env.VITE_CREATE_TRIB_CONTRACT_ADDRESS;
-const token_uri = import.meta.env.VITE_TEST_TOKEN_URI; //! TODO: CHange here
 
 export const ConnectWallet = async () => {
   try {
