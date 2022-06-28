@@ -34,7 +34,9 @@ const NewTribunal = () => {
   });
 
   const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    if ((e.target.name = "mintFee"))
+      setValues({ ...values, [e.target.name]: Math.round(e.target.value, 10) });
+    else setValues({ ...values, [e.target.name]: e.target.value });
   };
   const handleValidate = () => {
     const { tribunalName, email, walletAddress, mintFee, about } = values;
@@ -104,13 +106,14 @@ const NewTribunal = () => {
   }, [user]);
 
   useEffect(() => {
-    if (createTRibError) setError(createTRibError.message);
+    if  (createTRibError) setError(createTRibError.message);
     // if (isCreating) setSubmitting(true);
     if (created && createTRibHash) setHash(createTRibHash);
   }, [isCreating, created, createTRibHash, createTRibError]);
 
   return (
     <div className="mt-10 sm:mt-0">
+      {console.log(values)}
       <div className="md:grid md:grid-cols-3 md:gap-6">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">

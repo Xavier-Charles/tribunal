@@ -1,3 +1,4 @@
+import moment from "moment";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -50,6 +51,23 @@ const AboutComponent = ({ dao }) => {
               </h4>{" "}
               {dao.desc}
             </div>
+            {dao.creator && (
+              <>
+                <div className="mb-3">
+                  <h4 className="text-skin-link mb-2 leading-7 break-words font-semibold text-lg">
+                    Started by
+                  </h4>{" "}
+                  {dao.creatorName}
+                </div>
+                <div className="mb-3">
+                  <h4 className="text-skin-link mb-2 leading-7 break-words font-semibold text-lg">
+                    Started at
+                  </h4>{" "}
+                  {moment(dao.createdAt).format("MMMM, YYYY")}
+                </div>
+              </>
+            )}
+
             <div className="last:mb-0 mb-3"></div>
           </div>
         </div>

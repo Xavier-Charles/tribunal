@@ -8,11 +8,12 @@ const CheckNFTs = async (contract_address) => {
   // const chain = ropsten // use this later
   try {
     const res = await fetch(
-      `https://deep-index.moralis.io/api/v2/${address}/nft/${contractAddress}?chain=polygon&format=decimal`,
+      // `https://deep-index.moralis.io/api/v2/${address}/nft/${contractAddress}?chain=polygon&format=decimal`,
+      `https://deep-index.moralis.io/api/v2/${address}/nft?chain=polygon&format=decimal`,
       {
         method: "GET",
         headers: {
-          "X-API-Key": import.meta.env.VITE_MORALIS_API_KEY,
+          "X-API-Key": import.meta.env.VITE_MORALIS_WEB3_API_KEY,
         },
       }
     );
@@ -26,5 +27,26 @@ const CheckNFTs = async (contract_address) => {
     return null;
   }
 };
-
 export default CheckNFTs;
+
+export const VerifyNFTs = async (contract_address, userAddress) => {
+  try {
+    const res = await fetch(
+      `https://deep-index.moralis.io/api/v2/${userAddress}/nft/${contract_address}?chain=polygon&format=decimal`,
+      {
+        method: "GET",
+        headers: {
+          "X-API-Key": import.meta.env.VITE_MORALIS_WEB3_API_KEY,
+        },
+      }
+    );
+
+    const nfts = (await res.json()).result;
+
+    return !!nfts;
+  } catch (err) {
+    console.log({ err });
+
+    return null;
+  }
+};

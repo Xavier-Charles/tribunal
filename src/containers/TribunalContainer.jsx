@@ -1,12 +1,10 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { useMintNftAction } from "../api/mintNFT";
 import NewTribunal from "../components/tribunalComponents/NewTribunal";
 import { useParams } from "react-router-dom";
 
 const TribunalContainer = () => {
   const { id } = useParams();
-  const { isMinting, minted, hash, error, mintNFT } = useMintNftAction();
 
   return (
     <>

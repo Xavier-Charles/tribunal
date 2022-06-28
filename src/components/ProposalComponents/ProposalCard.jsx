@@ -71,7 +71,7 @@ const ProposalCard = ({ proposal, dao }) => {
                 </span>
               </div>
               <Tag
-                text={isClosed ? "Closed" : "Open"}
+                text={dao.creator ? isClosed ? "Closed" : "Open": "Test"}
                 bg={isClosed ? "bg-cadet" : "bg-gold"}
               />
             </div>
@@ -79,9 +79,7 @@ const ProposalCard = ({ proposal, dao }) => {
               {proposal.title}
             </h3>
             <p className="break-words mb-2 text-sm sm:text-md">
-              Summary Transfer ENS treasury and contract ownership from the ENS
-              Multisig to ENS DAO. Abstract With the recent launch of the ENS
-              DAO and $...
+              {proposal.desc}
             </p>
             <div>
               <span className="mt-2 flex space-x-1 items-center">

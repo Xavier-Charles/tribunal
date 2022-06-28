@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import CheckNFTs from "../../api/checkNFTs";
+import CheckNFTs, { VerifyNFTs } from "../../api/checkNFTs";
 import { createProposal } from "../../api/proposals";
 import { authenticate } from "../../api/utils";
+import { UserContext } from "../../context/UserContext";
 import DateInput from "../DateInput";
 
 const NewProposal = ({ dao }) => {
+  const { user } = useContext(UserContext);
+
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -23,20 +26,20 @@ const NewProposal = ({ dao }) => {
         startDate.target.value.length > 0 &&
         endDate.target.value.length > 0
       ) {
-        const nfts = await CheckNFTs();
-        if (nfts.length !== 0) {
-          const user = await authenticate({
-            signingMessage: "Verify wallet address to submit your proposal",
-          });
-
-          if (user) {
+        const hasNFt = await VerifyNFTs(dao.contract_address, user.address);
+        if (hasNFt) {
+          if (user && dao) {
             const data = {
               title: title.target.value,
               desc: desc.target.value,
               startDate: startDate.target.value,
               endDate: endDate.target.value,
-              author: user.get("ethAddress"),
+              author: user.address,
+              authorName: user.name,
               votes: {},
+              tribunalName: dao.tribunalName,
+              tribunalId: dao._id,
+              tribunalAddress: dao.contract_address,
             };
             const response = await createProposal(data);
             if (response) {

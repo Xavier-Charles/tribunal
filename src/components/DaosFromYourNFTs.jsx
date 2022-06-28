@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import DaosList from "./DaosList";
 
-const DaosFromYourNFTs = ({ hasUser, userDAOsMatch }) => {
+const DaosFromYourNFTs = ({ authenticated, userDAOsMatch }) => {
   return (
     <>
       <section className="text-gray-600 body-font">
@@ -22,12 +22,12 @@ const DaosFromYourNFTs = ({ hasUser, userDAOsMatch }) => {
       ) : (
         <div className="w-full max-w-lg text-center flex justify-center my-6 mx-auto">
           <h1 className="text-base sm:text-base px-2 font-mono  mb-2 text-gray-400">
-            {hasUser
-              ? "No DAOs on Tribunal Matched Your NFTs."
-              : "When You Connect Your Wallet, DAOs That Match Your NFTs Will Be Displayed Here."}{" "}
-            <Link to="/mint" className="text-gold">
-              Mint a test NFT
-            </Link>
+            {authenticated
+              ? "No Tribunal Matched Your NFTs."
+              : "When You Connect Your Wallet, Tribunals That Match Your NFTs Will Be Displayed Here."}{" "}
+            <p className="text-gold">
+              Join any Tribunal by Minting their NFT.
+            </p>
           </h1>
         </div>
       )}

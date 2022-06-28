@@ -11,9 +11,7 @@ const MintContainer = () => {
   const { tribunals } = useContext(TribunalsContext);
 
   const [dao, setDao] = useState(null);
-  const { isMinting, minted, hash, error, mintNFT } = useMintNftAction(
-    dao?.contract_address
-  );
+  const { isMinting, minted, hash, error, mintNFT } = useMintNftAction(dao);
 
   useEffect(() => {
     scrollToTop();

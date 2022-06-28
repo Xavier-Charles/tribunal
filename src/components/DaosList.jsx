@@ -3,9 +3,7 @@ import Daos from "../api/testDaos.json";
 import DaoCard from "./DaoCard";
 
 const DaosList = ({ userDAOsMatch, tribunals = [] }) => {
-  const DaosEtTribunals = tribunals?.length
-    ? [...tribunals, ...Daos]
-    : [...Daos];
+
 
   return (
     <section id="all-tribunals" className="text-gray-600 body-font">
@@ -22,7 +20,7 @@ const DaosList = ({ userDAOsMatch, tribunals = [] }) => {
                   isTest={!dao.creator}
                 />
               ))
-            : DaosEtTribunals.map((dao) => (
+            : tribunals.map((dao) => (
                 <DaoCard
                   key={dao.id}
                   logo={dao.logo}

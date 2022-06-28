@@ -1,32 +1,44 @@
 import moment from "moment";
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import { truncateWithEllipsis } from "../../api/utils";
 import ProposalCard from "./ProposalCard";
 import ProposalCardskeleton from "./ProposalCardskeleton";
 
 const ProposalsList = ({ proposals, dao }) => {
+  const [filteredProposals, setFilteredProposals] = useState();
   const daysLeft = (date) => moment(date).diff(moment(), "days");
   const sortFunction = (a, b) => {
     return daysLeft(a.endDate) - daysLeft(b.endDate);
   };
 
-  const sortProposals = () => {
+  const sortProposals = (proposals) => {
     const closed = [];
     const open = [];
     proposals.forEach((proposal) => {
       moment(proposal.endDate).isBefore(moment())
         ? closed.push(proposal)
         : open.push(proposal);
-      proposal.author = truncateWithEllipsis(
-        proposal.author,
-        8
-      );
+      proposal.author = truncateWithEllipsis(proposal.author, 8);
     });
     closed.sort(sortFunction);
     open.sort(sortFunction);
     return [...open, ...closed];
   };
-  const sortedProposals = sortProposals();
+
+  useEffect(() => {
+    if (dao.creator) {
+      
+      const sortedProposals = sortProposals(
+        proposals.filter((p) => p.tribunalAddress === dao.contract_address)
+      );
+      setFilteredProposals(sortedProposals);
+    } else {
+      const sortedProposals = sortProposals(proposals);
+      setFilteredProposals(sortedProposals);
+    }
+  }, [proposals]);
 
   const Placeholder = () => (
     <>
@@ -68,12 +80,12 @@ const ProposalsList = ({ proposals, dao }) => {
         </div>
       </div>
       <div className="space-y-4 px-5 lg:px-0 my-4 lg:w-11/12 w-full">
-        {sortedProposals.length === 0 ? (
-          <Placeholder />
-        ) : (
-          sortedProposals.map((proposal) => (
+        {filteredProposals?.length > 0 ? (
+          filteredProposals.map((proposal) => (
             <ProposalCard key={proposal._id} proposal={proposal} dao={dao} />
           ))
+        ) : (
+          <Placeholder />
         )}
       </div>
       <div className="w-[10px] h-[10px] absolute bottom-0"></div>

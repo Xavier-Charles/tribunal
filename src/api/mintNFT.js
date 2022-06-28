@@ -15,14 +15,14 @@ export const ConnectWallet = async () => {
       return;
     }
     let chainId = await ethereum.request({ method: "eth_chainId" });
-    // console.log("Connected to chain:" + chainId);
+    console.log("Connected to chain:" + chainId);
 
-    // const ropstenChainId = "0x3";
+    const polygonChainId = "0x89";
 
-    // if (chainId !== ropstenChainId) {
-    //   alert("You are not connected to the Ropsten Testnet!");
-    //   return;
-    // }
+    if (chainId !== polygonChainId) {
+      alert("You are not connected to the Polygon mainnet, please switch.");
+      return;
+    }
 
     const accounts = await ethereum.request({ method: "eth_requestAccounts" });
 
@@ -34,7 +34,7 @@ export const ConnectWallet = async () => {
 };
 
 // Creates transaction to mint NFT on clicking Mint button
-export const useMintNftAction = (contract_address) => {
+export const useMintNftAction = (dao) => {
   const [isMinting, setisMinting] = useState(false);
   const [minted, setMinted] = useState(false);
   const [hash, setHash] = useState(null);
@@ -57,14 +57,12 @@ export const useMintNftAction = (contract_address) => {
           signer
         );
 
-        console.log(contract_address);
-
         const nftTx = await nftContract.mintChildNFT(
-          contract_address,
+          dao.contract_address,
           userAddress,
           {
             gasLimit: 5_000_000,
-            value: ethers.utils.parseEther("1"),
+            value: ethers.utils.parseEther(dao.mintFee),
           }
         );
         console.log("called 3");
