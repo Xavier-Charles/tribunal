@@ -108,7 +108,7 @@ const VoteResults = ({ proposal }) => {
               <div>
                 <div className="text-skin-link mb-1 flex justify-between">
                   <div className="flex overflow-hidden">
-                    <span className="mr-1 truncate">For</span>
+                    <span className="mr-1 truncate">For: {results.for}</span>
                   </div>
                 </div>
                 <div className="h-2 relative overflow-hidden rounded-full flex">
@@ -124,7 +124,9 @@ const VoteResults = ({ proposal }) => {
               <div>
                 <div className="text-skin-link mb-1 flex justify-between">
                   <div className="flex overflow-hidden">
-                    <span className="mr-1 truncate">Against</span>
+                    <span className="mr-1 truncate">
+                      Against: {results.against}
+                    </span>
                   </div>
                 </div>
                 <div className="h-2 relative overflow-hidden rounded-full flex">
