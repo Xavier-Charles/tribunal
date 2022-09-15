@@ -1,12 +1,11 @@
 import React, { useState, createContext, useEffect } from "react";
 import { uauth } from "../api/unstoppableAuth";
-import { authenticate, scrollToTop, truncateWithEllipsis } from "../api/utils";
-
-/**
- *
- * Gatsby Context API: https://medium.com/swlh/gatsbys-global-state-management-with-react-s-context-5f8064e93351
- *
- */
+import {
+  authenticate,
+  cbAuthenticate,
+  scrollToTop,
+  truncateWithEllipsis,
+} from "../api/utils";
 
 export const UserContext = createContext(null);
 // const appId = import.meta.env.VITE_MORALIS_APP_ID;
@@ -14,13 +13,13 @@ export const UserContext = createContext(null);
 
 const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [mUser, setMUser] = useState(null);
+  const [mUser, setMUser] = useState(null); // Moralis User
   const [udUser, setUdUser] = useState(null);
 
   const handleAuthenticate = async () => {
     try {
       const data = await authenticate({
-        signingMessage: "Sign in to Tribunal",
+        signingMessage: "Sign in to Tribunals",
       });
       setMUser(data);
     } catch (err) {
@@ -39,7 +38,8 @@ const UserContextProvider = ({ children }) => {
 
   const handleCBAuthenticate = async () => {
     try {
-      const data = await Moralis.authenticate(uauth);
+      const data = await cbAuthenticate();
+      // const data = await Moralis.authenticate(uauth);
       setMUser(data);
     } catch (err) {
       console.log(err);
@@ -60,15 +60,24 @@ const UserContextProvider = ({ children }) => {
       } else console.error(e);
     }
     if (user?.sub) {
+      //Unstoppable signIn
       setUdUser(user);
       setUser({
         name: user.sub,
         address: user.wallet_address,
       });
-    } else {
+    }
+    if (u?.attributes?.ethAddress) {
+      // Metamask signIn
       setUser({
         name: truncateWithEllipsis(u.attributes.ethAddress, 8),
         address: u.attributes.ethAddress,
+      });
+    } else {
+      // CB SignIn
+      setUser({
+        name: truncateWithEllipsis(u.address, 8),
+        address: u.address,
       });
     }
   };
