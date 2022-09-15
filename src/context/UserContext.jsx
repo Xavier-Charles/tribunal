@@ -15,6 +15,7 @@ const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [mUser, setMUser] = useState(null); // Moralis User
   const [udUser, setUdUser] = useState(null);
+  const [isHuman, setIsHuman] = useState(false);
 
   const handleAuthenticate = async () => {
     try {
@@ -95,30 +96,6 @@ const UserContextProvider = ({ children }) => {
     if (mUser) getUDUser(mUser);
   }, [mUser]);
 
-  const moralisUser = {
-    username: "Ze7kRiy5JaLIe0RLILuDOydoo",
-    authData: {
-      moralisEth: {
-        id: "0xe70d4bdacc0444caa973b0a05cb6f2974c34af0c",
-        signature:
-          "0x3eeb9c11f107627503424ef00777d0de019017f99929db790a490372ff27a8d23167ca9560b8a8e48d1a8da87b0fb54f28643ea58cc4454c788b3b6fb32c38ce1b",
-        data: "Moralis Authentication\n\nId: PnOQJ53Big0pIgvOByeR5olBogAj8HZdLfGFMjoY:1656258948906",
-      },
-    },
-    createdAt: "2022-06-24T15:43:12.470Z",
-    updatedAt: "2022-06-26T15:55:55.426Z",
-    accounts: ["0xe70d4bdacc0444caa973b0a05cb6f2974c34af0c"],
-    ethAddress: "0xe70d4bdacc0444caa973b0a05cb6f2974c34af0c",
-    ACL: {
-      M5RU8CTwAK5lmKpJaxaAxGSD: {
-        read: true,
-        write: true,
-      },
-    },
-    sessionToken: "r:d7e326f6d6839365f3f9761616805e4e",
-    objectId: "M5RU8CTwAK5lmKpJaxaAxGSD",
-  };
-
   return (
     <UserContext.Provider
       value={{
@@ -131,6 +108,8 @@ const UserContextProvider = ({ children }) => {
         handleUDAuthenticate,
         handleCBAuthenticate,
         getUDUser,
+        isHuman,
+        setIsHuman,
       }}
     >
       {children}

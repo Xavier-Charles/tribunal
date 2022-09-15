@@ -6,17 +6,19 @@ export const getTribunals = async () => {
       method: "GET",
     });
 
-    const content = (await res.json()).data;
+    if (res) {
+      const content = (await res.json()).data;
 
-    return content.map((c) => ({
-      ...c,
-      id: c._id,
-      logo: c.fileUrl,
-      title: c.tribunalName,
-      desc: c.about,
-      slug: c._id,
-      contract_address: c.address,
-    }));
+      return content.map((c) => ({
+        ...c,
+        id: c._id,
+        logo: c.fileUrl,
+        title: c.tribunalName,
+        desc: c.about,
+        slug: c._id,
+        contract_address: c.address,
+      }));
+    }
   } catch (err) {
     console.log({ err });
 
