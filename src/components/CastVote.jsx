@@ -25,8 +25,8 @@ const CastVote = ({ proposal, handleProposal }) => {
                 ...proposal,
                 votes: {
                   ballot: {
-                    prevCid: proposal.votes.cid || "none",
-                    ...proposal.votes.ballot,
+                    prevCid: proposal.votes?.cid || "none",
+                    ...proposal.votes?.ballot,
                     [userAddress]: type,
                   },
                 },
@@ -36,7 +36,7 @@ const CastVote = ({ proposal, handleProposal }) => {
                   ...proposal,
                   votes: {
                     ballot: {
-                      ...proposal.votes.ballot,
+                      ...proposal.votes?.ballot,
                       [userAddress]: type,
                     },
                     cid,

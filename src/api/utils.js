@@ -1,4 +1,4 @@
-// import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
+import { Web3Storage } from "web3.storage";
 
 export const getProvider = () => {
   const coinbaseWallet = new CoinbaseWalletSDK({
@@ -106,8 +106,23 @@ export const getImgUrl = (url) =>
     ? `https://0xhost-ess.infura-ipfs.io/ipfs/${url.split("/ipfs/")[1]}`
     : url;
 
-export const uploadtoIPFS = async (data) => {
+function getAccessToken() {
+  // If you're just testing, you can paste in a token
+  // and uncomment the following line:
+  // return 'paste-your-token-here'
 
+  // In a real app, it's better to read an access token from an
+  // environement variable or other configuration that's kept outside of
+  // your code base. For this to work, you need to set the
+  // WEB3STORAGE_TOKEN environment variable before you run your code.
+  return process.env.WEB3STORAGE_TOKEN;
+}
+
+function makeStorageClient() {
+  return new Web3Storage({ token: import.meta.env.VITE_WEB3STORAGE_TOKEN });
+}
+
+export const uploadtoIPFS = async (data) => {
   const file = new Moralis.File("file.json", {
     base64: btoa(JSON.stringify(JSON.stringify(data))),
   });
@@ -116,6 +131,5 @@ export const uploadtoIPFS = async (data) => {
 
   console.log(uploadData);
 
-   return uploadData._hash;
-
+  return uploadData._hash;
 };
