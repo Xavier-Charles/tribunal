@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import { getTribunals } from "../api/tribunals";
 import Daos from "../api/testDaos.json";
+import { getImgUrl } from "../api/utils";
 
 /**
  *
@@ -16,7 +17,10 @@ const TribunalsContextProvider = ({ children }) => {
   useEffect(() => {
     (async () => {
       const data = await getTribunals();
-      setTribunals([...data, ...Daos]);
+      [].map;
+      const updatedData = data.map((t) => ({ ...t, logo: getImgUrl(t.logo) }));
+
+      setTribunals([...updatedData, ...Daos]);
     })();
   }, []);
 

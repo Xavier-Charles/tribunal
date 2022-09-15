@@ -4,9 +4,7 @@ import { truncateWithEllipsis } from "../api/utils";
 import Tag from "./Tag";
 
 const DaoCard = ({ logo, title, desc, slug, isTest }) => {
-  const img = logo.includes("ipfs.infura.io")
-    ? `https://0xhost-ess.infura-ipfs.io/ipfs/${logo.split("/ipfs/")[1]}`
-    : logo;
+
 
   return (
     <Link to={`/${slug}/proposals/`} className="xl:w-1/3 md:w-1/2 w-full p-4">
@@ -14,7 +12,7 @@ const DaoCard = ({ logo, title, desc, slug, isTest }) => {
         {isTest && <Tag text="Test" bg="bg-cadet" />}
         <img
           alt=""
-          src={img}
+          src={logo}
           className=" w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 border-0 mb-4"
         />
 

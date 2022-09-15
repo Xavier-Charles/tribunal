@@ -79,7 +79,7 @@ export const cbAuthenticate = async () => {
     const user = await (await fetch(url, options)).json();
 
     console.log(user);
-    return user
+    return user;
   }
 };
 
@@ -100,3 +100,8 @@ export const truncateWithEllipsis = (s, n, type) => {
 export const scrollToTop = () => {
   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 };
+
+export const getImgUrl = (url) =>
+  url.includes("ipfs.infura.io")
+    ? `https://0xhost-ess.infura-ipfs.io/ipfs/${url.split("/ipfs/")[1]}`
+    : url;
