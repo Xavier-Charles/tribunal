@@ -105,3 +105,17 @@ export const getImgUrl = (url) =>
   url.includes("ipfs.infura.io")
     ? `https://0xhost-ess.infura-ipfs.io/ipfs/${url.split("/ipfs/")[1]}`
     : url;
+
+export const uploadtoIPFS = async (data) => {
+
+  const file = new Moralis.File("file.json", {
+    base64: btoa(JSON.stringify(JSON.stringify(data))),
+  });
+
+  const uploadData = await file.saveIPFS();
+
+  console.log(uploadData);
+
+   return uploadData._hash;
+
+};

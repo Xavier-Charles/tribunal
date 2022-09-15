@@ -1,10 +1,13 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { truncateWithEllipsis } from "../../api/utils";
 
 const VoteResults = ({ proposal }) => {
   const [results, setResults] = useState({ for: 0, against: 0 });
 
-  const totalVotes = proposal.votes ? Object.keys(proposal.votes).length : 0;
+  const totalVotes = proposal.votes?.ballot
+    ? Object.keys(proposal.votes.ballot).length
+    : 0;
 
   const percentVote = (v) =>
     proposal && totalVotes > 0 && v
@@ -13,7 +16,7 @@ const VoteResults = ({ proposal }) => {
 
   useEffect(() => {
     let isSubscribed = true;
-    const votes = proposal.votes;
+    const votes = proposal.votes?.ballot;
     const res = { for: 0, against: 0 };
     if (votes) {
       Object.keys(votes).map((key) => {
@@ -42,13 +45,15 @@ const VoteResults = ({ proposal }) => {
               <div>
                 <b>IPFS</b>
                 <a
-                  href="https://cloudflare-ipfs.com/ipfs/Qme6unqKYhKTymXjB8G8ZWyjNtrskqE8k44m16u1LLv85S"
+                  href={`https://0xhost-ess.infura-ipfs.io/ipfs/${proposal.votes?.cid}`}
                   target="_blank"
                   className="whitespace-nowrap float-right"
                   rel="noopener noreferrer"
+                  title={proposal.votes?.cid}
                 >
                   {" "}
-                  #Qme6unq
+                  {proposal.votes &&
+                    truncateWithEllipsis(proposal.votes?.cid, 12, "end")}
                   <i
                     className="iconfont iconexternal-link ml-1"
                     style={{ fontSize: "16px", lineHeight: "16px" }}

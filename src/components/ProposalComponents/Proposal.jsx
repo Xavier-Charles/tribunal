@@ -163,11 +163,11 @@ const Proposal = ({ _proposal, dao }) => {
                 </h4>
                 <div className="leading-5 sm:leading-6">
                   {proposal.votes &&
-                    Object.keys(proposal.votes).map((key) => (
+                    Object.keys(proposal.votes.ballot).map((key) => (
                       <VoteItem
                         key={key}
                         name={key}
-                        type={proposal.votes[key]}
+                        type={proposal.votes.ballot[key]}
                       />
                     ))}
                 </div>

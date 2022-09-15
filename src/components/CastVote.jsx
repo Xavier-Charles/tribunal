@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CheckNFTs from "../api/checkNFTs";
 import { updateProposal } from "../api/proposals";
+import { uploadtoIPFS } from "../api/utils";
 
 const CastVote = ({ proposal, handleProposal }) => {
   const [message, setMessage] = useState(null);
@@ -12,7 +13,7 @@ const CastVote = ({ proposal, handleProposal }) => {
     if (proposal) {
       try {
         const nfts = await CheckNFTs();
-        if (nfts.length !== 0) {
+        if (nfts?.length !== 0) {
           const user = await Moralis.authenticate({
             signingMessage: "Verify wallet address to vote.",
           });
@@ -20,16 +21,33 @@ const CastVote = ({ proposal, handleProposal }) => {
             const voters = Object.keys(proposal.votes || []);
             const userAddress = user.get("ethAddress");
             if (!voters.includes(userAddress)) {
-              const data = await updateProposal(proposal._id, {
+              const cid = await uploadtoIPFS({
+                ...proposal,
                 votes: {
-                  ...proposal.votes,
-                  [userAddress]: type,
+                  ballot: {
+                    prevCid: proposal.votes.cid || "none",
+                    ...proposal.votes.ballot,
+                    [userAddress]: type,
+                  },
                 },
               });
-              if (data) {
-                handleMessage("Vote Sucessful.");
-                handleProposal(data);
-              } else handleMessage("Something went wrong");
+              if (cid) {
+                const data = await updateProposal(proposal._id, {
+                  ...proposal,
+                  votes: {
+                    ballot: {
+                      ...proposal.votes.ballot,
+                      [userAddress]: type,
+                    },
+                    cid,
+                  },
+                });
+
+                if (data) {
+                  handleMessage("Vote Sucessful.");
+                  handleProposal(data);
+                } else handleMessage("Something went wrong");
+              } else handleMessage("Failed to upload to IPFS");
             } else handleMessage("This address has already Voted.");
           } else handleMessage("Couldn't verify your wallet.");
         } else handleMessage("No Matching NFTs for this DAO in your wallet.");
