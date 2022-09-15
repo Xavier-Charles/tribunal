@@ -16,8 +16,12 @@ import CheckNFTs from "../api/checkNFTs";
  */
 
 const HomeContainer = () => {
-  const { handleAuthenticate, handleUDAuthenticate, authenticated } =
-    useContext(UserContext);
+  const {
+    handleAuthenticate,
+    handleUDAuthenticate,
+    handleCBAuthenticate,
+    authenticated,
+  } = useContext(UserContext);
   const { tribunals } = useContext(TribunalsContext);
   const [userDAOsMatch, setUserDAOsMatch] = useState([]);
 
@@ -51,6 +55,7 @@ const HomeContainer = () => {
       <Hero
         handleAuthenticate={handleAuthenticate}
         handleUAuthenticate={handleUDAuthenticate}
+        handleCBAuthenticate={handleCBAuthenticate}
       />
       <DaosFromYourNFTs
         authenticated={authenticated}

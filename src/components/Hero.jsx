@@ -1,7 +1,11 @@
 import React from 'react'
 import ConnectWallet from './ConnectWallet';
 
-const Hero = ({ handleAuthenticate, handleUAuthenticate }) => {
+const Hero = ({
+  handleAuthenticate,
+  handleUAuthenticate,
+  handleCBAuthenticate,
+}) => {
   return (
     <section className="text-gray-600 body-font pt-28 lg:pt-24">
       <div className="container max-w-7xl px-5 py-24 mx-auto">
@@ -16,6 +20,7 @@ const Hero = ({ handleAuthenticate, handleUAuthenticate }) => {
         <ConnectWallet
           handleUAuthenticate={handleUAuthenticate}
           handleAuthenticate={handleAuthenticate}
+          handleCBAuthenticate={handleCBAuthenticate}
         />
       </div>
     </section>

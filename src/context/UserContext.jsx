@@ -37,6 +37,15 @@ const UserContextProvider = ({ children }) => {
     }
   };
 
+  const handleCBAuthenticate = async () => {
+    try {
+      const data = await Moralis.authenticate(uauth);
+      setMUser(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const getUDUser = async (u) => {
     let user = {};
     try {
@@ -111,6 +120,7 @@ const UserContextProvider = ({ children }) => {
         authenticated,
         handleAuthenticate,
         handleUDAuthenticate,
+        handleCBAuthenticate,
         getUDUser,
       }}
     >
