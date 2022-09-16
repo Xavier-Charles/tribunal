@@ -52,8 +52,8 @@ const VoteResults = ({ proposal }) => {
                   title={proposal.votes?.cid}
                 >
                   {" "}
-                  {proposal.votes &&
-                    truncateWithEllipsis(proposal.votes?.cid, 12, "end")}
+                  {proposal.votes?.cid &&
+                    truncateWithEllipsis(proposal.votes.cid, 12, "end")}
                   <i
                     className="iconfont iconexternal-link ml-1"
                     style={{ fontSize: "16px", lineHeight: "16px" }}

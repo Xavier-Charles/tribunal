@@ -162,8 +162,8 @@ const Proposal = ({ _proposal, dao }) => {
                   </div>
                 </h4>
                 <div className="leading-5 sm:leading-6">
-                  {proposal.votes &&
-                    Object.keys(proposal.votes?.ballot).map((key) => (
+                  {proposal.votes?.ballot &&
+                    Object.keys(proposal.votes.ballot).map((key) => (
                       <VoteItem
                         key={key}
                         name={key}
