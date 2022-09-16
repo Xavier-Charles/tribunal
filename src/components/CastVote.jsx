@@ -18,8 +18,9 @@ const CastVote = ({ proposal, handleProposal }) => {
             signingMessage: "Verify wallet address to vote.",
           });
           if (user) {
-            const voters = Object.keys(proposal.votes || []);
+            const voters = Object.keys(proposal.votes?.ballot || {});
             const userAddress = user.get("ethAddress");
+
             if (!voters.includes(userAddress)) {
               const cid = await uploadtoIPFS({
                 ...proposal,
