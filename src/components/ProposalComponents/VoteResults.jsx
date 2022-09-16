@@ -45,7 +45,7 @@ const VoteResults = ({ proposal }) => {
               <div>
                 <b>IPFS</b>
                 <a
-                  href={`https://0xhost-ess.infura-ipfs.io/ipfs/${proposal.votes?.cid}`}
+                  href={`https://w3s.link/ipfs/${proposal.votes?.cid}`}
                   target="_blank"
                   className="whitespace-nowrap float-right"
                   rel="noopener noreferrer"
