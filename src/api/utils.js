@@ -101,9 +101,14 @@ export const scrollToTop = () => {
   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 };
 
+// export const getImgUrl = (url) =>
+//   url.includes("ipfs.infura.io")
+//     ? `https://0xhost-ess.infura-ipfs.io/ipfs/${url.split("/ipfs/")[1]}`
+//     : url;
+
 export const getImgUrl = (url) =>
   url.includes("ipfs.infura.io")
-    ? `https://0xhost-ess.infura-ipfs.io/ipfs/${url.split("/ipfs/")[1]}`
+    ? `https://w3s.link/${url.split("/ipfs/")[1]}`
     : url;
 
 export const uploadtoIPFS = async (data) => {
@@ -118,4 +123,3 @@ export const uploadtoIPFS = async (data) => {
   console.log("stored files with cid:", cid);
   return cid;
 };
-
