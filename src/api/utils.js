@@ -106,30 +106,16 @@ export const getImgUrl = (url) =>
     ? `https://0xhost-ess.infura-ipfs.io/ipfs/${url.split("/ipfs/")[1]}`
     : url;
 
-function getAccessToken() {
-  // If you're just testing, you can paste in a token
-  // and uncomment the following line:
-  // return 'paste-your-token-here'
-
-  // In a real app, it's better to read an access token from an
-  // environement variable or other configuration that's kept outside of
-  // your code base. For this to work, you need to set the
-  // WEB3STORAGE_TOKEN environment variable before you run your code.
-  return process.env.WEB3STORAGE_TOKEN;
-}
-
-function makeStorageClient() {
-  return new Web3Storage({ token: import.meta.env.VITE_WEB3STORAGE_TOKEN });
-}
-
 export const uploadtoIPFS = async (data) => {
-  const file = new Moralis.File("file.json", {
-    base64: btoa(JSON.stringify(JSON.stringify(data))),
+  const client = new Web3Storage({
+    token: import.meta.env.VITE_WEB3STORAGE_TOKEN,
   });
 
-  const uploadData = await file.saveIPFS();
+  const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+  const files = [new File([blob], "data.json")];
 
-  console.log(uploadData);
-
-  return uploadData._hash;
+  const cid = await client.put(files);
+  console.log("stored files with cid:", cid);
+  return cid;
 };
+
