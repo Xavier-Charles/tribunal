@@ -78,7 +78,6 @@ export const cbAuthenticate = async () => {
 
     const user = await (await fetch(url, options)).json();
 
-    console.log(user);
     return user;
   }
 };

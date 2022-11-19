@@ -1,5 +1,5 @@
 import React from "react";
-import Metamask from "../assets/svg/metamask.svg?component";
+import Metamask from "../assets/svg/metamask.svg?component"; 
 import Unstoppable from "../assets/svg/unstoppable.svg?component";
 import Coinbase from "../assets/svg/coinbase.svg?component";
 
