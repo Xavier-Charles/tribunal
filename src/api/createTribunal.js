@@ -4,35 +4,6 @@ import { useState } from "react";
 import contractABI from "./createTribunalABI.json";
 
 const contract_address = import.meta.env.VITE_CREATE_TRIB_CONTRACT_ADDRESS;
-
-const ConnectWallet = async () => {
-  try {
-    const { ethereum } = window;
-
-    if (!ethereum) {
-      console.log("Metamask not detected");
-      return;
-    }
-    let chainId = await ethereum.request({ method: "eth_chainId" });
-    console.log("Connected to chain:" + chainId);
-
-    const polygonChainId = "0x89";
-    const metisChainId = 0x257;
-
-    if (chainId !== polygonChainId && chainId !== metisChainId) {
-      alert("You are not connected to the Polygon mainnet or Metis testnet, please switch.");
-      return;
-    }
-
-    const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-
-    return accounts[0];
-  } catch (error) {
-    console.log("Error connecting to metamask", error);
-    return null;
-  }
-};
-
 // Creates transaction to create a Tribunal
 export const useCreateTribunalAction = () => {
   const [isCreating, setisCreating] = useState(false);
