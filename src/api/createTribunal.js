@@ -63,8 +63,6 @@ export const useCreateTribunalAction = () => {
         signer
       );
 
-      console.log("before createTribunal: ", tribContract, contract_address);
-
       const tribTx =
         chainId === metisChainId
           ? await tribContract.createTribunal(
@@ -79,8 +77,6 @@ export const useCreateTribunalAction = () => {
           : await tribContract.createTrib(walletAddress, fileUrl, mintFee, {
               gasLimit: 3_000_000,
             });
-
-      console.log("after createTribunal");
 
       setisCreating(true);
 

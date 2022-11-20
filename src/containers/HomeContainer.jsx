@@ -35,8 +35,8 @@ const HomeContainer = () => {
           nfts.forEach((nft) => {
             const trib = tribunals.find(
               (trib) =>
-                trib.contract_address.toLowerCase() ===
-                nft.token_address.toLowerCase()
+                trib.contract_address?.toLowerCase() ===
+                nft.token_address?.toLowerCase()
             );
             if (trib) matches.push(trib);
           });
