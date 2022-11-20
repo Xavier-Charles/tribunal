@@ -23,7 +23,7 @@ export const useCreateTribunalAction = () => {
   const [newTrib, setNewTrib] = useState(null);
 
   const createTrib = async (tribunalName, walletAddress, fileUrl, mintFee) => {
-    let tribData = undefined;
+    let newTribAddress = undefined;
     try {
       const { ethereum } = window;
 
@@ -91,7 +91,7 @@ export const useCreateTribunalAction = () => {
           let decodedData = iface.parseLog(log);
           if (decodedData.args[0]) {
             setNewTrib(decodedData.args[0]);
-            tribData = decodedData.args[0];
+            newTribAddress = decodedData.args[0];
           }
         } catch (e) {
           console.warn({ e });
@@ -104,7 +104,7 @@ export const useCreateTribunalAction = () => {
       //   `Mined, see transaction: https://polygonscan.com/tx/${tribTx.hash}`
       // );
 
-      return tribData;
+      return [newTribAddress, chainId];
     } catch (error) {
       console.log("Error creating", { error });
       setError(error.message);

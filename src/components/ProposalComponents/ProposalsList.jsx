@@ -7,6 +7,7 @@ import ProposalCard from "./ProposalCard";
 import ProposalCardskeleton from "./ProposalCardskeleton";
 
 const ProposalsList = ({ proposals, dao }) => {
+  console.log(dao);
   const [filteredProposals, setFilteredProposals] = useState();
   const daysLeft = (date) => moment(date).diff(moment(), "days");
   const sortFunction = (a, b) => {
@@ -28,11 +29,12 @@ const ProposalsList = ({ proposals, dao }) => {
   };
 
   useEffect(() => {
+    console.log(dao);
     if (dao.creator) {
-      
       const sortedProposals = sortProposals(
         proposals.filter((p) => p.tribunalAddress === dao.contract_address)
       );
+      console.log(sortedProposals);
       setFilteredProposals(sortedProposals);
     } else {
       const sortedProposals = sortProposals(proposals);

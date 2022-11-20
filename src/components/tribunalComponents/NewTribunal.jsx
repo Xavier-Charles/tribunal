@@ -69,7 +69,7 @@ const NewTribunal = () => {
         const { address, name } = user;
         const { tribunalName, email, walletAddress, mintFee, about } = values;
 
-        const newTribAdd = await createTrib(
+        const [newTribAdd, chainId] = await createTrib(
           tribunalName,
           walletAddress,
           fileUrl,
@@ -85,7 +85,8 @@ const NewTribunal = () => {
           fileUrl,
           creator: address,
           creatorName: name,
-          address: newTribAdd,
+          contractAddress: newTribAdd,
+          chainId,
         };
 
         const response = await createTribunal(tribunal);
