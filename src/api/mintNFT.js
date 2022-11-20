@@ -2,6 +2,7 @@ import React from "react";
 import { ethers } from "ethers";
 import { useState } from "react";
 import contractABI from "./createTribunalABI.json";
+import { metisChainId, polygonChainId } from "./contants";
 
 const og_contract_address = import.meta.env.VITE_CREATE_TRIB_CONTRACT_ADDRESS;
 
@@ -16,9 +17,7 @@ export const ConnectWallet = async () => {
     let chainId = await ethereum.request({ method: "eth_chainId" });
     console.log("Connected to chain:" + chainId);
 
-    const polygonChainId = "0x89";
-
-    if (chainId !== polygonChainId) {
+    if (chainId !== polygonChainId && chainId !== metisChainId) {
       alert("You are not connected to the Polygon mainnet, please switch.");
       return;
     }

@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import CheckNFTs, { VerifyNFTs } from "../../api/checkNFTs";
 import { createProposal } from "../../api/proposals";
-import { authenticate } from "../../api/utils";
 import { UserContext } from "../../context/UserContext";
 import DateInput from "../DateInput";
 

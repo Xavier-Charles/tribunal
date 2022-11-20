@@ -17,9 +17,10 @@ const ConnectWallet = async () => {
     console.log("Connected to chain:" + chainId);
 
     const polygonChainId = "0x89";
+    const metisChainId = 0x257;
 
-    if (chainId !== polygonChainId) {
-      alert("You are not connected to the Polygon mainnet, please switch.");
+    if (chainId !== polygonChainId && chainId !== metisChainId) {
+      alert("You are not connected to the Polygon mainnet or Metis testnet, please switch.");
       return;
     }
 

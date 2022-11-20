@@ -1,7 +1,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import { uauth } from "../api/unstoppableAuth";
 import {
-  authenticate,
+  mmAuthenticate,
   cbAuthenticate,
   scrollToTop,
   truncateWithEllipsis,
@@ -19,7 +19,7 @@ const UserContextProvider = ({ children }) => {
 
   const handleAuthenticate = async () => {
     try {
-      const data = await authenticate({
+      const data = await mmAuthenticate({
         signingMessage: "Sign in to Tribunals",
       });
       setMUser(data);

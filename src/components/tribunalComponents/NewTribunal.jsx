@@ -2,11 +2,10 @@ import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCreateTribunalAction } from "../../api/createTribunal";
 import { createTribunal } from "../../api/tribunals";
-import { authenticate, truncateWithEllipsis } from "../../api/utils";
+import { mmAuthenticate, truncateWithEllipsis } from "../../api/utils";
 import FileUploader from "../Minter/uploadImage";
 import { UserContext } from "../../context/UserContext";
 import { useEffect } from "react";
-import { useCallback } from "react";
 
 const NewTribunal = () => {
   const navigate = useNavigate();
@@ -58,7 +57,7 @@ const NewTribunal = () => {
     try {
       if (!handleValidate() || !user) return;
 
-      const ver = await authenticate({
+      const ver = await mmAuthenticate({
         signingMessage: "Verify wallet address to start your Tribunal",
       });
 
