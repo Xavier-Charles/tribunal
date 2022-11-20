@@ -1,13 +1,13 @@
 import React from 'react'
-import DaosContainer from '../containers/DaosContainer'
+import ProposalContainer from '../containers/ProposalContainer'
 import TribunalsContextProvider from '../context/TribunalsContext'
 
-const DaosPage = ({type}) => {
+const ProposalsPage = ({type}) => {
   return (
     <TribunalsContextProvider>
-      <DaosContainer type={type} />
+      <ProposalContainer type={type} />
     </TribunalsContextProvider>
   );
 }
 
-export default DaosPage
+export default ProposalsPage
