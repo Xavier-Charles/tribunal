@@ -7,7 +7,7 @@ import {
   truncateWithEllipsis,
 } from "../api/utils";
 
-export const UserContext = createContext(null);
+export const UserContext = createContext({});
 // const appId = import.meta.env.VITE_MORALIS_APP_ID;
 // const serverUrl = import.meta.env.VITE_MORALIS_SERVER_URL;
 

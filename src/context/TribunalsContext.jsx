@@ -9,7 +9,7 @@ import { getImgUrl } from "../api/utils";
  *
  */
 
-export const TribunalsContext = createContext(null);
+export const TribunalsContext = createContext({});
 
 const TribunalsContextProvider = ({ children }) => {
   const [tribunals, setTribunals] = useState(Daos);

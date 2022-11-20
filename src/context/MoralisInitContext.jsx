@@ -1,6 +1,6 @@
-import React, { useState, createContext } from "react";
+import React, { createContext } from "react";
 
-export const MoralisInitContext = createContext(null);
+export const MoralisInitContext = createContext({});
 const apiKey = import.meta.env.VITE_VITE_MORALIS_API_KEY;
 const MoralisInitProvider = ({ children }) => {
   // Moralis.start({ apiKey });
