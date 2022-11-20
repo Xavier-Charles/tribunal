@@ -119,7 +119,7 @@ export const cbAuthenticate = async () => {
 export const truncateWithEllipsis = (s, n, type) => {
   const maxLen = n !== undefined ? n : 12;
 
-  if (s.length > maxLen) {
+  if (s?.length > maxLen) {
     if (type === "end") {
       return `${s.substr(0, maxLen)}...`;
     }

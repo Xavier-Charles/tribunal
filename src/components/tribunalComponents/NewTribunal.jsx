@@ -12,7 +12,7 @@ const NewTribunal = () => {
   const {
     isCreating,
     created,
-    hash: createTRibHash,
+    txLink,
     error: createTRibError,
     createTrib,
     newTrib,
@@ -22,7 +22,6 @@ const NewTribunal = () => {
   const [fileUrl, setFileUrl] = useState("");
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
-  const [hash, setHash] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [values, setValues] = useState({
     tribunalName: "",
@@ -54,7 +53,12 @@ const NewTribunal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
+
     try {
+      if (!user) {
+        setError("Please connect your wallet to continue");
+        return;
+      }
       if (!handleValidate() || !user) return;
 
       const ver = await mmAuthenticate({
@@ -65,7 +69,12 @@ const NewTribunal = () => {
         const { address, name } = user;
         const { tribunalName, email, walletAddress, mintFee, about } = values;
 
-        const newTribAdd = await createTrib(walletAddress, fileUrl, mintFee);
+        const newTribAdd = await createTrib(
+          tribunalName,
+          walletAddress,
+          fileUrl,
+          mintFee
+        );
 
         const tribunal = {
           tribunalName,
@@ -106,9 +115,7 @@ const NewTribunal = () => {
 
   useEffect(() => {
     if (createTRibError) setError(createTRibError.message);
-    // if (isCreating) setSubmitting(true);
-    if (created && createTRibHash) setHash(createTRibHash);
-  }, [isCreating, created, createTRibHash, createTRibError]);
+  }, [isCreating, created, createTRibError]);
 
   return (
     <div className="mt-10 sm:mt-0">
@@ -185,7 +192,7 @@ const NewTribunal = () => {
                       htmlFor="mintFee"
                       className="block text-sm font-medium text-gray-700"
                     >
-                      Mint Fee (in MATIC)
+                      Mint Fee (in base token)
                     </label>
                     <input
                       type="number"
@@ -241,11 +248,11 @@ const NewTribunal = () => {
                     handleValidate() ? "" : "opacity-30"
                   } inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gold hover:bg-gold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold`}
                   onClick={handleSubmit}
-                  // disabled={!handleValidate()}
+                  disabled={!handleValidate()}
                 >
                   {submitting ? "Creating..." : "Create"}
                 </button>
-                {(success || error || hash) && (
+                {(success || error || txLink) && (
                   <>
                     <p
                       className={`${
@@ -262,15 +269,12 @@ const NewTribunal = () => {
                       {success}
                     </p>
                     <a
-                      href={`https://polygonscan.com/tx/${hash}`}
+                      href={txLink}
                       className={`${
-                        hash ? "" : "hidden"
+                        txLink ? "" : "hidden"
                       }text-center text-sm text-gold mt-2`}
                     >
-                      {truncateWithEllipsis(
-                        `https://polygonscan.com/tx/${hash}`,
-                        26
-                      )}
+                      {truncateWithEllipsis(txLink, 26)}
                     </a>
                   </>
                 )}

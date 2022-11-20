@@ -43,7 +43,6 @@ export const useMintNftAction = (dao) => {
       const { ethereum } = window;
       if (ethereum) {
         const userAddress = await ConnectWallet();
-        console.log(userAddress);
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = await provider.getSigner();
 
@@ -61,8 +60,6 @@ export const useMintNftAction = (dao) => {
             value: ethers.utils.parseEther(String(dao.mintFee)),
           }
         );
-        console.log("called 3");
-
         //the transaction
         // console.log("Minting....", nftTx.hash);
         setisMinting(true);

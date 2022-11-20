@@ -1,11 +1,8 @@
 // FileUpload Component : Uploads the selcted File and returns the URL after uploading the file .
 // import React from "react";
-
+import { Web3Storage } from "web3.storage";
 import { useRef } from "react";
 import { useState } from "react";
-
-// import { FileUpload } from "react-ipfs-uploader";
-// File upload is gotten from unpkg.com
 
 const FileUploader = ({ fileUrl, setFileUrl }) => {
   // drag state
@@ -16,20 +13,34 @@ const FileUploader = ({ fileUrl, setFileUrl }) => {
 
   // uploads the file to IPFS
   const uploadFile = async (ufile) => {
-    const ipfs = window.IpfsHttpClient.create(
-      "https://ipfs.infura.io:5001/api/v0"
-    );
+    // const ipfs = window.IpfsHttpClient.create(
+    //   "https://ipfs.infura.io:5001/api/v0"
+    // );
+
+    // setUploading(true);
+
+    // try {
+    //   const added = await ipfs.add(ufile);
+    //   const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+    //   setFileUrl(url);
+    // } catch (err) {
+    //   console.error("Error uploading the file : ", err);
+    // }
+    // setUploading(false);
+
+    const client = new Web3Storage({
+      token: import.meta.env.VITE_WEB3STORAGE_TOKEN,
+    });
+
+    const files = [ufile];
 
     setUploading(true);
-
-    try {
-      const added = await ipfs.add(ufile);
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      setFileUrl(url);
-    } catch (err) {
-      console.error("Error uploading the file : ", err);
-    }
+    const cid = await client.put(files);
+    const url = `https://${cid}.ipfs.w3s.link/${ufile.name}`;
     setUploading(false);
+    setFileUrl(url);
+
+    return cid;
   };
 
   // handle drag events
@@ -138,9 +149,7 @@ const FileUploader = ({ fileUrl, setFileUrl }) => {
               />
             </svg>
             <div className="flex text-sm text-gray-600">
-              <p
-                className="relative cursor-pointer bg-white rounded-md font-medium text-gold hover:text-yellow-600 focus-within:outline-none"
-              >
+              <p className="relative cursor-pointer bg-white rounded-md font-medium text-gold hover:text-yellow-600 focus-within:outline-none">
                 <span>Upload a file</span>
               </p>
               <p className="pl-1">or drag and drop</p>
@@ -149,7 +158,10 @@ const FileUploader = ({ fileUrl, setFileUrl }) => {
           </div>
         )}
       </div>
-      <a href={fileUrl} className="block text-sm text-gold w-72 overflow-hidden text-ellipsis whitespace-nowrap">
+      <a
+        href={fileUrl}
+        className="block text-sm text-gold w-72 overflow-hidden text-ellipsis whitespace-nowrap"
+      >
         {fileSelected
           ? uploading
             ? "Uploading..."
