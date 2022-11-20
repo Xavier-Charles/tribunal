@@ -41,13 +41,11 @@ export const useMintNftAction = (dao) => {
   const mintNFT = async () => {
     try {
       const { ethereum } = window;
-      console.log("called 1");
       if (ethereum) {
         const userAddress = await ConnectWallet();
         console.log(userAddress);
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = await provider.getSigner();
-        console.log("called 2");
 
         const nftContract = new ethers.Contract(
           og_contract_address,
@@ -75,7 +73,6 @@ export const useMintNftAction = (dao) => {
 
         setHash(nftTx.hash);
         setisMinting(false);
-        console.log("called 4");
 
         // console.log(
         //   `Mined, see transaction: https://Ropsten.etherscan.io/tx/${nftTx.hash}`

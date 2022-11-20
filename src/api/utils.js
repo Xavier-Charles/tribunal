@@ -73,9 +73,6 @@ export const mmAuthenticate = async () => {
     };
 
     const user = await (await fetch(url, options)).json();
-
-    console.log(user);
-
     return user;
   }
 };
@@ -101,8 +98,6 @@ export const cbAuthenticate = async () => {
       method: "personal_sign",
       params: [message, accounts[0]],
     });
-
-    console.log(accounts, signature, provider, chainId);
 
     const url = "https://authapi.moralis.io/challenge/verify/evm";
     const options = {
@@ -153,6 +148,5 @@ export const uploadtoIPFS = async (data) => {
   const files = [new File([blob], "data.json")];
 
   const cid = await client.put(files);
-  console.log("stored files with cid:", cid);
   return cid;
 };
