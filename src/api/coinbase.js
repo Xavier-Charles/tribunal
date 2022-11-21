@@ -11,7 +11,6 @@ export const useCoinbaseAuth = () => {
   /* Connect wallet */
   const CBConnect = async () => {
     try {
-      console.log("CALLED");
       const provider = getProvider();
       setProvider(provider);
       // Get accounts for connected wallet

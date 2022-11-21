@@ -1,4 +1,5 @@
 import { Web3Storage } from "web3.storage";
+import { metisChainId, polygonChainId } from "./contants";
 
 export const getProvider = () => {
   const coinbaseWallet = new CoinbaseWalletSDK({
@@ -7,16 +8,6 @@ export const getProvider = () => {
   });
   return coinbaseWallet.makeWeb3Provider();
 };
-
-export async function authenticate(props) {
-  try {
-    const user = await Moralis.authenticate(props);
-    return user;
-  } catch (err) {
-    console.log(err);
-    return null;
-  }
-}
 
 const getVerificationMessage = async (address, statement, chainId) => {
   const url = "https://authapi.moralis.io/challenge/request/evm";
@@ -41,6 +32,51 @@ const getVerificationMessage = async (address, statement, chainId) => {
   return data;
 };
 
+export const mmAuthenticate = async () => {
+  const { ethereum } = window;
+  const accounts = await ethereum.request({
+    method: "eth_requestAccounts",
+  });
+  const chainId = await ethereum.request({
+    method: "eth_chainId",
+  });
+
+  if (accounts[0] && chainId) {
+    const msg = "Sign in to Tribunals";
+
+    /**
+     * Moralis doesn't support Metis yet
+     * TODO: Build custom auth backend for Metis
+     */
+    const passId = chainId === metisChainId ? polygonChainId : chainId;
+
+    const { id, message, profileId } = await getVerificationMessage(
+      accounts[0],
+      msg,
+      passId
+    );
+
+    const signature = await ethereum.request({
+      method: "personal_sign",
+      params: [message, accounts[0]],
+    });
+
+    const url = "https://authapi.moralis.io/challenge/verify/evm";
+    const options = {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        "X-API-KEY": import.meta.env.VITE_MORALIS_WEB3_API_KEY,
+      },
+      body: JSON.stringify({ message, signature }),
+    };
+
+    const user = await (await fetch(url, options)).json();
+    return user;
+  }
+};
+
 export const cbAuthenticate = async () => {
   const provider = getProvider();
   const accounts = await provider.request({
@@ -63,8 +99,6 @@ export const cbAuthenticate = async () => {
       params: [message, accounts[0]],
     });
 
-    console.log(accounts, signature, provider, chainId);
-
     const url = "https://authapi.moralis.io/challenge/verify/evm";
     const options = {
       method: "POST",
@@ -85,7 +119,7 @@ export const cbAuthenticate = async () => {
 export const truncateWithEllipsis = (s, n, type) => {
   const maxLen = n !== undefined ? n : 12;
 
-  if (s.length > maxLen) {
+  if (s?.length > maxLen) {
     if (type === "end") {
       return `${s.substr(0, maxLen)}...`;
     }
@@ -99,7 +133,6 @@ export const truncateWithEllipsis = (s, n, type) => {
 export const scrollToTop = () => {
   window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 };
-
 
 export const getImgUrl = (url) =>
   url.includes("ipfs.infura.io")
@@ -115,6 +148,5 @@ export const uploadtoIPFS = async (data) => {
   const files = [new File([blob], "data.json")];
 
   const cid = await client.put(files);
-  console.log("stored files with cid:", cid);
   return cid;
 };

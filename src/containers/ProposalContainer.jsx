@@ -10,7 +10,7 @@ import { getProposals } from "../api/proposals";
 import { scrollToTop } from "../api/utils";
 import { TribunalsContext } from "../context/TribunalsContext";
 
-const DaosContainer = ({ type }) => {
+const ProposalContainer = ({ type }) => {
   const { slug, id } = useParams();
   const { tribunals } = useContext(TribunalsContext);
   const [proposals, setProposals] = useState([]);
@@ -20,6 +20,7 @@ const DaosContainer = ({ type }) => {
   useEffect(() => {
     scrollToTop();
     let isSubscribed = true;
+    console.log(tribunals);
     const dao = tribunals.find((daoObj) => daoObj.slug === slug);
     setDao(dao);
 
@@ -67,4 +68,4 @@ const DaosContainer = ({ type }) => {
     );
 };
 
-export default DaosContainer;
+export default ProposalContainer;

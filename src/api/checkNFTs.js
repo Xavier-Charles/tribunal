@@ -1,3 +1,4 @@
+import { metisChainId } from "./contants";
 import { ConnectWallet } from "./mintNFT";
 
 const CheckNFTs = async (contract_address) => {
@@ -31,6 +32,12 @@ export default CheckNFTs;
 
 export const VerifyNFTs = async (contract_address, userAddress) => {
   try {
+    // TODO: Impelemnt NFT checker for metis
+    const chainId = await window.ethereum.request({
+      method: "eth_chainId",
+    });
+    if (chainId === metisChainId) return true
+
     const res = await fetch(
       `https://deep-index.moralis.io/api/v2/${userAddress}/nft/${contract_address}?chain=polygon&format=decimal`,
       {
