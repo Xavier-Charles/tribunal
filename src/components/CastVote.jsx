@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import CheckNFTs from "../api/checkNFTs";
+import CheckNFTs, { VerifyNFTs } from "../api/checkNFTs";
+import { ConnectWallet } from "../api/mintNFT";
 import { updateProposal } from "../api/proposals";
 import { uploadtoIPFS } from "../api/utils";
 
@@ -12,14 +13,11 @@ const CastVote = ({ proposal, handleProposal }) => {
   const handleVote = async (type) => {
     if (proposal) {
       try {
-        const nfts = await CheckNFTs();
-        if (nfts?.length !== 0) {
-          const user = await Moralis.authenticate({
-            signingMessage: "Verify wallet address to vote.",
-          });
-          if (user) {
+        const hasNFT = await VerifyNFTs();
+        if (hasNFT) {
+          const userAddress = await ConnectWallet();
+          if (userAddress) {
             const voters = Object.keys(proposal.votes?.ballot || {});
-            const userAddress = user.get("ethAddress");
 
             if (!voters.includes(userAddress)) {
               const cid = await uploadtoIPFS({
