@@ -24,6 +24,19 @@
     "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newContract",
+        "type": "address"
+      }
+    ],
+    "name": "childContract",
+    "type": "event"
+  },
+  {
     "inputs": [],
     "name": "child",
     "outputs": [
@@ -79,7 +92,7 @@
     ],
     "name": "mintTribNFT",
     "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "payable",
     "type": "function"
   },
   {

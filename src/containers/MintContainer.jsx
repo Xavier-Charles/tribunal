@@ -14,21 +14,27 @@ const MintContainer = () => {
   const [intentMint, setIntentMint] = useState(false);
 
   const [dao, setDao] = useState(null);
-  const { isMinting, minted, hash, error, mintNFT } = useMintNftAction(dao);
+  const { isMinting, minted, txLink, error, mintNFT } = useMintNftAction(dao);
 
   useEffect(() => {
     scrollToTop();
     const dao = tribunals.find((daoObj) => daoObj.slug === slug);
+
     setDao(dao);
   }, [tribunals]);
 
   const handleMint = useCallback(() => {
-    if (isHuman) mintNFT();
-    setIntentMint(true);
-  }, [isHuman]);
+    // ? Remove worldcoin verify for now.
+    // if (isHuman) mintNFT();
+    // setIntentMint(true);
+    mintNFT(dao?.chainId);
+    // }, [isHuman]);
+  }, [dao]);
 
-  if (intentMint && !isHuman)
-    return <WorldCoinVerify setIsHuman={setIsHuman} />;
+  // ? Remove worldcoin verify for now.
+
+  // if (intentMint && !isHuman)
+  //   return <WorldCoinVerify setIsHuman={setIsHuman} />;
 
   return (
     <>
@@ -37,7 +43,7 @@ const MintContainer = () => {
         <MintComponent
           isMinting={isMinting}
           minted={minted}
-          hash={hash}
+          txLink={txLink}
           error={error}
           mintNFT={handleMint}
           dao={dao}

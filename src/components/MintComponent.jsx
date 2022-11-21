@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { metisChainId } from "../api/contants";
 
-const MintComponent = ({ isMinting, minted, hash, error, mintNFT, dao }) => {
+const MintComponent = ({ isMinting, minted, txLink, error, mintNFT, dao }) => {
   const handleClick = async () => {
     await mintNFT();
   };
@@ -15,7 +16,12 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT, dao }) => {
           </h1>
 
           <h3 className="lg:w-2/3 max-w-lg mx-auto leading-relaxed text-base">
-            Please switch to the <span className="font-bold">Polygon</span>{" "}
+            Please switch to the{" "}
+            <span className="font-bold">
+              {dao.chainId === parseInt(metisChainId)
+                ? "Metis Goerli"
+                : "Polygon"}
+            </span>{" "}
             Network before miniting to your{" "}
             <span className="font-bold">Metamask</span> wallet.
           </h3>
@@ -56,13 +62,10 @@ const MintComponent = ({ isMinting, minted, hash, error, mintNFT, dao }) => {
                       Transaction at{" "}
                       <a
                         className="text-gold hover:text-yellow-600"
-                        href={`https://polygonscan.com/tx/${hash}`}
+                        href={txLink}
                         target="_blank"
                       >
-                        {`https://https://polygonscan.com/tx/${hash}`.slice(
-                          0,
-                          40
-                        )}
+                        {txLink.slice(0, 40)}
                         ...
                       </a>
                     </>

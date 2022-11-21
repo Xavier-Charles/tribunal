@@ -1,10 +1,19 @@
-import React from "react";
 import { ethers } from "ethers";
 import { useState } from "react";
-import contractABI from "./createTribunalABI.json";
-import { metisChainId, polygonChainId } from "./contants";
+import contractABIPolygon from "./createTribunalABI.json";
+import contractABIMetis from "./createTribunalABI-two.json";
 
-const og_contract_address = import.meta.env.VITE_CREATE_TRIB_CONTRACT_ADDRESS;
+import {
+  metisChainId,
+  metisExplorer,
+  polygonChainId,
+  polygonExplorer,
+} from "./contants";
+
+const contract_address_polygon = import.meta.env
+  .VITE_CREATE_TRIB_CONTRACT_ADDRESS_POLYGON;
+const contract_address_metis = import.meta.env
+  .VITE_CREATE_TRIB_CONTRACT_ADDRESS_METIS;
 
 export const ConnectWallet = async () => {
   try {
@@ -35,53 +44,69 @@ export const ConnectWallet = async () => {
 export const useMintNftAction = (dao) => {
   const [isMinting, setisMinting] = useState(false);
   const [minted, setMinted] = useState(false);
-  const [hash, setHash] = useState(null);
+  const [txLink, setTxLink] = useState(null);
   const [error, setError] = useState(null);
 
-  const mintNFT = async () => {
+  const mintNFT = async (chainId) => {
     try {
       const { ethereum } = window;
-      if (ethereum) {
-        const userAddress = await ConnectWallet();
-        const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = await provider.getSigner();
 
-        const nftContract = new ethers.Contract(
-          og_contract_address,
-          contractABI, // use list due to https://github.com/ethers-io/ethers.js/issues/1238
-          signer
-        );
-
-        const nftTx = await nftContract.mintChildNFT(
-          dao.contract_address,
-          userAddress,
-          {
-            gasLimit: 5_000_000,
-            value: ethers.utils.parseEther(String(dao.mintFee)),
-          }
-        );
-        //the transaction
-        // console.log("Minting....", nftTx.hash);
-        setisMinting(true);
-
-        let tx = await nftTx.wait();
-        setMinted(true);
-        // console.log("Mined!", tx);
-
-        setHash(nftTx.hash);
-        setisMinting(false);
-
-        // console.log(
-        //   `Mined, see transaction: https://Ropsten.etherscan.io/tx/${nftTx.hash}`
-        // );
-      } else {
-        // console.log("Ethereum object doesn't exist!");
+      if (!ethereum) {
         setError("Having trouble connecting to metamask");
+        return;
       }
+
+      const contract_address =
+        chainId === metisChainId
+          ? contract_address_metis
+          : contract_address_polygon;
+
+      const [contractABI, explorer] =
+        chainId === parseInt(metisChainId)
+          ? [contractABIMetis, metisExplorer]
+          : [contractABIPolygon, polygonExplorer];
+
+      const userAddress = await ConnectWallet();
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = await provider.getSigner();
+
+      const nftContract = new ethers.Contract(
+        contract_address,
+        contractABI,
+        signer
+      );
+
+      const nftTx =
+        chainId === parseInt(metisChainId)
+          ? await nftContract.mintTribNFT(
+              dao.contract_address || dao.contractAddress,
+              userAddress,
+              {
+                gasLimit: 3_000_000,
+                value: ethers.utils.parseEther(String(dao.mintFee)),
+              }
+            )
+          : await nftContract.mintChildNFT(
+              dao.contract_address || dao.contractAddress,
+              userAddress,
+              {
+                gasLimit: 3_000_000,
+                value: ethers.utils.parseEther(String(dao.mintFee)),
+              }
+            );
+
+      setisMinting(true);
+
+      let tx = await nftTx.wait();
+      console.log(tx);
+
+      setMinted(true);
+      setisMinting(false);
+      setTxLink(`${explorer}tx/${tx.transactionHash}`);
     } catch (error) {
       console.log("Error minting", error);
       setError(error.message);
     }
   };
-  return { isMinting, minted, hash, error, mintNFT };
+  return { isMinting, minted, txLink, error, mintNFT };
 };

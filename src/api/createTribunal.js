@@ -1,4 +1,3 @@
-import React from "react";
 import { ethers } from "ethers";
 import { useState } from "react";
 import contractABIPolygon from "./createTribunalABI.json";
@@ -14,6 +13,7 @@ const contract_address_polygon = import.meta.env
   .VITE_CREATE_TRIB_CONTRACT_ADDRESS_POLYGON;
 const contract_address_metis = import.meta.env
   .VITE_CREATE_TRIB_CONTRACT_ADDRESS_METIS;
+
 // Creates transaction to create a Tribunal
 export const useCreateTribunalAction = () => {
   const [isCreating, setisCreating] = useState(false);
@@ -86,10 +86,13 @@ export const useCreateTribunalAction = () => {
       console.log("Mined!", tribTx);
 
       const iface = new ethers.utils.Interface(contractABI);
-      tx.logs.map((log) => {
+
+      tx.logs.map((log, i) => {
         try {
           let decodedData = iface.parseLog(log);
-          if (decodedData.args[0]) {
+
+          console.log(`${i}: `, decodedData);
+          if (decodedData.name === "childContract" && decodedData.args[0]) {
             setNewTrib(decodedData.args[0]);
             newTribAddress = decodedData.args[0];
           }

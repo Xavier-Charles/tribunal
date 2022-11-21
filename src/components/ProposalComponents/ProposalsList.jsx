@@ -32,7 +32,12 @@ const ProposalsList = ({ proposals, dao }) => {
     console.log(dao);
     if (dao.creator) {
       const sortedProposals = sortProposals(
-        proposals.filter((p) => p.tribunalAddress === dao.contract_address)
+        proposals.filter(
+          (p) =>
+            (dao.contract_address &&
+              p.tribunalAddress === dao.contract_address) ||
+            p.tribunalAddress === dao.contractAddress
+        )
       );
       console.log(sortedProposals);
       setFilteredProposals(sortedProposals);
