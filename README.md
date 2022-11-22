@@ -4,6 +4,9 @@ Tribunals is a decentralized NFT-based voting system for DAOs. DAOs can issue NF
 Users don't have to pay gas to participate in DAO governance.
 
 During the **EthSafari hackathon** 
+- Support for Metis Georli testnet was added.
+
+During the **EthSafari hackathon** 
 - Coinbase wallet signup was integrated. 
 - Worldcoin human verification was added to the "Join a tribunal" page to allow only real humans mint NFTs and join Tribunals.
 - Votes are uploaded to IPFS with the most recent vote linking to one before. This is done by storing the previous vote's CID in the file of the newest one. Therefore a chain of verifiable data is created.
