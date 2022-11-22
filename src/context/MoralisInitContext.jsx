@@ -1,18 +1,9 @@
-import React, { useState, createContext } from "react";
-// import { useMoralis, useMoralisWeb3Api } from "react-moralis";
+import React, { createContext } from "react";
 
-/**
- *
- * Gatsby Context API: https://medium.com/swlh/gatsbys-global-state-management-with-react-s-context-5f8064e93351
- *
- */
-
-export const MoralisInitContext = createContext(null);
-const appId = import.meta.env.VITE_MORALIS_APP_ID;
-const serverUrl = import.meta.env.VITE_MORALIS_SERVER_URL;
-
+export const MoralisInitContext = createContext({});
+const apiKey = import.meta.env.VITE_VITE_MORALIS_API_KEY;
 const MoralisInitProvider = ({ children }) => {
-  Moralis.start({ serverUrl, appId });
+  // Moralis.start({ apiKey });
 
   return (
     <MoralisInitContext.Provider value="">

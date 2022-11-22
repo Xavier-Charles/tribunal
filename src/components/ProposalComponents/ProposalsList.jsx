@@ -29,10 +29,10 @@ const ProposalsList = ({ proposals, dao }) => {
 
   useEffect(() => {
     if (dao.creator) {
-      
       const sortedProposals = sortProposals(
-        proposals.filter((p) => p.tribunalAddress === dao.contract_address)
+        proposals.filter((p) => p.tribunalId === dao._id)
       );
+      console.log(sortedProposals, proposals, dao);
       setFilteredProposals(sortedProposals);
     } else {
       const sortedProposals = sortProposals(proposals);

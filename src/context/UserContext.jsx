@@ -1,13 +1,13 @@
 import React, { useState, createContext, useEffect } from "react";
 import { uauth } from "../api/unstoppableAuth";
 import {
-  authenticate,
+  mmAuthenticate,
   cbAuthenticate,
   scrollToTop,
   truncateWithEllipsis,
 } from "../api/utils";
 
-export const UserContext = createContext(null);
+export const UserContext = createContext({});
 // const appId = import.meta.env.VITE_MORALIS_APP_ID;
 // const serverUrl = import.meta.env.VITE_MORALIS_SERVER_URL;
 
@@ -19,7 +19,7 @@ const UserContextProvider = ({ children }) => {
 
   const handleAuthenticate = async () => {
     try {
-      const data = await authenticate({
+      const data = await mmAuthenticate({
         signingMessage: "Sign in to Tribunals",
       });
       setMUser(data);
