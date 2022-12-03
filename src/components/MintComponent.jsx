@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { metisChainId } from "../api/contants";
+import { supportedChains } from "../api/contants";
 
 const MintComponent = ({ isMinting, minted, txLink, error, mintNFT, dao }) => {
   const handleClick = async () => {
@@ -18,9 +18,7 @@ const MintComponent = ({ isMinting, minted, txLink, error, mintNFT, dao }) => {
           <h3 className="lg:w-2/3 max-w-lg mx-auto leading-relaxed text-base">
             Please switch to the{" "}
             <span className="font-bold">
-              {dao.chainId === parseInt(metisChainId)
-                ? "Metis Goerli"
-                : "Polygon"}
+              {supportedChains["0x" + dao?.chainId?.toString(16)]}
             </span>{" "}
             Network before miniting to your{" "}
             <span className="font-bold">Metamask</span> wallet.

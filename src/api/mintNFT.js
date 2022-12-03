@@ -1,19 +1,7 @@
 import { ethers } from "ethers";
 import { useState } from "react";
-import contractABIPolygon from "./createTribunalABI.json";
-import contractABIMetis from "./createTribunalABI-two.json";
 
-import {
-  metisChainId,
-  metisExplorer,
-  polygonChainId,
-  polygonExplorer,
-} from "./contants";
-
-const contract_address_polygon = import.meta.env
-  .VITE_CREATE_TRIB_CONTRACT_ADDRESS_POLYGON;
-const contract_address_metis = import.meta.env
-  .VITE_CREATE_TRIB_CONTRACT_ADDRESS_METIS;
+import { contractABIs, contract_addresses, explorers, polygonChainId, supportedChainIds } from "./contants";
 
 export const ConnectWallet = async () => {
   try {
@@ -26,8 +14,8 @@ export const ConnectWallet = async () => {
     let chainId = await ethereum.request({ method: "eth_chainId" });
     console.log("Connected to chain:" + chainId);
 
-    if (chainId !== polygonChainId && chainId !== metisChainId) {
-      alert("You are not connected to the Polygon mainnet, please switch.");
+    if (!supportedChainIds.includes(chainId)) {
+      setError("Please use a supported network");
       return;
     }
 
@@ -56,15 +44,9 @@ export const useMintNftAction = (dao) => {
         return;
       }
 
-      const contract_address =
-        chainId === metisChainId
-          ? contract_address_metis
-          : contract_address_polygon;
-
-      const [contractABI, explorer] =
-        chainId === parseInt(metisChainId)
-          ? [contractABIMetis, metisExplorer]
-          : [contractABIPolygon, polygonExplorer];
+      const contract_address = contract_addresses[chainId];
+      const contractABI = contractABIs[chainId];
+      const explorer = explorers[chainId];
 
       const userAddress = await ConnectWallet();
       const provider = new ethers.providers.Web3Provider(ethereum);
@@ -77,8 +59,8 @@ export const useMintNftAction = (dao) => {
       );
 
       const nftTx =
-        chainId === parseInt(metisChainId)
-          ? await nftContract.mintTribNFT(
+        chainId === parseInt(polygonChainId)
+          ? await nftContract.mintChildNFT(
               dao.contract_address || dao.contractAddress,
               userAddress,
               {
@@ -86,7 +68,7 @@ export const useMintNftAction = (dao) => {
                 value: ethers.utils.parseEther(String(dao.mintFee)),
               }
             )
-          : await nftContract.mintChildNFT(
+          : await nftContract.mintTribNFT(
               dao.contract_address || dao.contractAddress,
               userAddress,
               {
