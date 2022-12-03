@@ -1,5 +1,5 @@
 import { Web3Storage } from "web3.storage";
-import { polygonChainId } from "./contants";
+import { polygonChainId } from "./constants";
 
 export const getProvider = () => {
   const coinbaseWallet = new CoinbaseWalletSDK({

@@ -20,7 +20,6 @@ const ProposalContainer = ({ type }) => {
   useEffect(() => {
     scrollToTop();
     let isSubscribed = true;
-    console.log(tribunals);
     const dao = tribunals.find((daoObj) => daoObj.slug === slug);
     setDao(dao);
 

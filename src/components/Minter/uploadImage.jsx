@@ -160,6 +160,7 @@ const FileUploader = ({ fileUrl, setFileUrl }) => {
       </div>
       <a
         href={fileUrl}
+        target="_blank"
         className="block text-sm text-gold w-72 overflow-hidden text-ellipsis whitespace-nowrap"
       >
         {fileSelected

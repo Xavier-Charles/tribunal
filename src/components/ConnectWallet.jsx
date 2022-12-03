@@ -29,12 +29,12 @@ const ConnectWallet = ({
           >
             <Metamask className="w-[22px] self-center" />
           </button>
-          <button
+          {/* <button
             onClick={handleUAuthenticate}
             className="flex-shrink-0 flex text-cadet hover:bg-blue-600 hover:bg-opacity-5 border-blue-600 border py-2 px-4 focus:outline-none rounded text-lg mt-10 sm:mt-0 ml-2"
           >
             <Unstoppable className="w-6" />
-          </button>
+          </button> */}
         </div>
       </div>
     </section>

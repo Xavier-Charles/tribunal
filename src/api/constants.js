@@ -6,6 +6,7 @@ export const evmosChainId = "0x2328";
 export const polygonExplorer = "https://polygonscan.com/";
 export const metisExplorer = "https://goerli.explorer.metisdevops.link/";
 export const evmosExplorer = "https://evm.evmos.dev/";
+export const contractDPConstant = 1e18; // handle decimal places
 
 const contract_address_polygon = import.meta.env
   .VITE_CREATE_TRIB_CONTRACT_ADDRESS_POLYGON;
@@ -32,7 +33,7 @@ export const contractABIs = {
   [evmosChainId]: contractABIV2,
 };
 
-export const supportedChainIds = [polygonChainId, metisChainId, evmosChainId]
+export const supportedChainIds = [polygonChainId, metisChainId, evmosChainId];
 
 export const supportedChains = {
   [polygonChainId]: "Polygon mainnet",

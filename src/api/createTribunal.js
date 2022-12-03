@@ -2,11 +2,15 @@ import { ethers } from "ethers";
 import { useState } from "react";
 import {
   contractABIs,
+  contractDPConstant,
   contract_addresses,
   explorers,
   polygonChainId,
   supportedChainIds,
-} from "./contants";
+} from "./constants";
+
+console.log(ethers.utils.formatEther(1));
+console.log(ethers.utils.parseEther("0.000000000000000001"));
 
 // Creates transaction to create a Tribunal
 export const useCreateTribunalAction = () => {
@@ -56,7 +60,7 @@ export const useCreateTribunalAction = () => {
           : await tribContract.createTribunal(
               tribunalName,
               fileUrl,
-              mintFee,
+              mintFee * contractDPConstant,
               walletAddress,
               {
                 gasLimit: 3_000_000,
@@ -75,8 +79,6 @@ export const useCreateTribunalAction = () => {
       tx.logs.map((log, i) => {
         try {
           let decodedData = iface.parseLog(log);
-
-          console.log(`${i}: `, decodedData);
           if (decodedData.name === "childContract" && decodedData.args[0]) {
             setNewTrib(decodedData.args[0]);
             newTribAddress = decodedData.args[0];

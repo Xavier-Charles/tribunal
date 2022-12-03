@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { supportedChains } from "../api/contants";
+import { supportedChains } from "../api/constants";
 
 const MintComponent = ({ isMinting, minted, txLink, error, mintNFT, dao }) => {
   const handleClick = async () => {
@@ -8,7 +8,7 @@ const MintComponent = ({ isMinting, minted, txLink, error, mintNFT, dao }) => {
   };
 
   return (
-    <section className="text-gray-600 body-font relative pt-28 lg:pt-24">
+    <section className="text-gray-600 body-font relative mt-28 lg:mt-24">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-20">
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-6 md:mb-8 text-gray-900">

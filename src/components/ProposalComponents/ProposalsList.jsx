@@ -32,7 +32,6 @@ const ProposalsList = ({ proposals, dao }) => {
       const sortedProposals = sortProposals(
         proposals.filter((p) => p.tribunalId === dao._id)
       );
-      console.log(sortedProposals, proposals, dao);
       setFilteredProposals(sortedProposals);
     } else {
       const sortedProposals = sortProposals(proposals);
@@ -84,6 +83,8 @@ const ProposalsList = ({ proposals, dao }) => {
           filteredProposals.map((proposal) => (
             <ProposalCard key={proposal._id} proposal={proposal} dao={dao} />
           ))
+        ) : proposals.length > 10 ? (
+          <p className="w-full text-center mt-24">No proposals yet</p>
         ) : (
           <Placeholder />
         )}

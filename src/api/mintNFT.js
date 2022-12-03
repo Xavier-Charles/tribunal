@@ -1,7 +1,13 @@
 import { ethers } from "ethers";
 import { useState } from "react";
 
-import { contractABIs, contract_addresses, explorers, polygonChainId, supportedChainIds } from "./contants";
+import {
+  contractABIs,
+  contract_addresses,
+  explorers,
+  polygonChainId,
+  supportedChainIds,
+} from "./constants";
 
 export const ConnectWallet = async () => {
   try {
@@ -44,9 +50,10 @@ export const useMintNftAction = (dao) => {
         return;
       }
 
-      const contract_address = contract_addresses[chainId];
-      const contractABI = contractABIs[chainId];
-      const explorer = explorers[chainId];
+      const contract_address =
+        contract_addresses[ethers.utils.hexlify(chainId)];
+      const contractABI = contractABIs[ethers.utils.hexlify(chainId)];
+      const explorer = explorers[ethers.utils.hexlify(chainId)];
 
       const userAddress = await ConnectWallet();
       const provider = new ethers.providers.Web3Provider(ethereum);
@@ -80,7 +87,6 @@ export const useMintNftAction = (dao) => {
       setisMinting(true);
 
       let tx = await nftTx.wait();
-      console.log(tx);
 
       setMinted(true);
       setisMinting(false);

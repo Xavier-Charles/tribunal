@@ -1,4 +1,4 @@
-import { supportedChainIds } from "./contants";
+import { supportedChainIds } from "./constants";
 import { ConnectWallet } from "./mintNFT";
 
 const CheckNFTs = async (contract_address) => {
