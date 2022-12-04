@@ -9,9 +9,6 @@ import {
   supportedChainIds,
 } from "./constants";
 
-console.log(ethers.utils.formatEther(1));
-console.log(ethers.utils.parseEther("0.000000000000000001"));
-
 // Creates transaction to create a Tribunal
 export const useCreateTribunalAction = () => {
   const [isCreating, setisCreating] = useState(false);
