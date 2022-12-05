@@ -47,12 +47,12 @@ const VoteResults = ({ proposal }) => {
                 <a
                   href={`https://w3s.link/ipfs/${proposal?.votes?.cid}`}
                   target="_blank"
-                  className="whitespace-nowrap float-right"
+                  className="whitespace-nowrap float-right text-gold"
                   rel="noopener noreferrer"
                   title={proposal?.votes?.cid}
                 >
                   {" "}
-                  {proposal?.votes?.cid &&
+                  #{proposal?.votes?.cid &&
                     truncateWithEllipsis(proposal?.votes.cid, 12, "end")}
                   <i
                     className="iconfont iconexternal-link ml-1"

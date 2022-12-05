@@ -31,36 +31,6 @@ const Proposal = ({ _proposal, dao }) => {
     };
   }, []);
 
-  const VoteItem = ({ name, type }) => (
-    <div className="px-3 py-3 border-t flex">
-      <span className="w-[110px] xs:w-[130px] min-w-[110px] xs:min-w-[130px]">
-        <div>
-          <a className="flex flex-nowrap">
-            <span className="flex shrink-0 items-center justify-center mr-2">
-              <img
-                src={`https://i.pravatar.cc/36?img=${Math.floor(
-                  Math.random() * 65
-                )}`}
-                className="rounded-full bg-[color:var(--border-color)]"
-                style={{
-                  width: "18px",
-                  height: "18px",
-                  minWidth: "18px",
-                }}
-              />
-            </span>
-            <span className="w-full">
-              {truncateWithEllipsis(proposal.author, 8)}
-            </span>
-          </a>
-        </div>
-      </span>
-      <div className="flex-auto text-center text-skin-link truncate px-2">
-        <div className="text-center text-skin-link capitalize">{type}</div>
-      </div>
-    </div>
-  );
-
   return (
     <ChatProvider>
       <div className="lg:flex px-2 sm:px-5 md:px-0 lg:ml-72">
@@ -155,7 +125,7 @@ const Proposal = ({ _proposal, dao }) => {
               </div>
               <CastVote proposal={proposal} handleProposal={handleProposal} />
               <Discussion proposal={proposal} />
-              <VotesList ballot={proposal.votes?.ballot} />
+              <VotesList proposal={proposal} />
             </>
           ) : (
             <ProposalSkeleton />
