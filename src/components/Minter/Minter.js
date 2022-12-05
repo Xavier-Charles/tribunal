@@ -77,7 +77,6 @@ const Minter = (props) => {
   }, [walletAddress, name, fileUrl, description]);
 
   const onMintPressed = async () => {
-    console.log(walletAddress, name, fileUrl, description);
     //TODO: implement
     setStatus("Your NFT is minting");
     const { status } = await mintNFT(fileUrl, name, description);

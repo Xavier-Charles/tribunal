@@ -14,7 +14,7 @@ export const verifyProof = async ({merkle_root, nullifier_hash, proof}, callback
   await fetch("https://developer.worldcoin.org/api/v1/verify", requestOptions)
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       if (data.success) callback();
     });
 };

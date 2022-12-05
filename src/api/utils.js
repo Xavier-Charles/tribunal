@@ -1,5 +1,5 @@
 import { Web3Storage } from "web3.storage";
-import { metisChainId, polygonChainId } from "./contants";
+import { polygonChainId } from "./constants";
 
 export const getProvider = () => {
   const coinbaseWallet = new CoinbaseWalletSDK({
@@ -45,15 +45,14 @@ export const mmAuthenticate = async () => {
     const msg = "Sign in to Tribunals";
 
     /**
-     * Moralis doesn't support Metis yet
-     * TODO: Build custom auth backend for Metis
+     * Moralis doesn't support  or  yet
+     * TODO: Build custom auth backend for other supported chains
      */
-    const passId = chainId === metisChainId ? polygonChainId : chainId;
 
     const { id, message, profileId } = await getVerificationMessage(
       accounts[0],
       msg,
-      passId
+      polygonChainId
     );
 
     const signature = await ethereum.request({

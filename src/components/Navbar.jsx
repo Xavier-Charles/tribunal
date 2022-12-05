@@ -4,6 +4,9 @@ import logo from "../assets/png/logo.png";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { UserContext } from "../context/UserContext";
+import Metamask from "../assets/svg/metamask.svg?component";
+import Unstoppable from "../assets/svg/unstoppable.svg?component";
+import Coinbase from "../assets/svg/coinbase.svg?component";
 
 const navigation = [
   { name: "Create A Tribunal", href: "/tribunal/new", current: false },
@@ -16,7 +19,14 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 const Navbar = () => {
-  const { user, udUser, signOut, authenticated } = useContext(UserContext);
+  const {
+    user,
+    udUser,
+    signOut,
+    authenticated,
+    handleAuthenticate,
+    handleCBAuthenticate,
+  } = useContext(UserContext);
 
   return (
     <Disclosure as="nav" className="">
@@ -108,7 +118,7 @@ const Navbar = () => {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                   >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <Menu.Items className="origin-top-right z-10 absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
                           <Link
@@ -124,18 +134,55 @@ const Navbar = () => {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href={authenticated ? undefined: "/#sign-in"}
+                          <div
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}
-                            onClick={() => {
-                              signOut();
-                            }}
                           >
-                            {authenticated ? "Sign Out" : "Sign In"}
-                          </a>
+                            {authenticated ? (
+                              <p
+                                className="block text-sm text-gray-700 cursor-pointer"
+                                onClick={() => {
+                                  signOut();
+                                }}
+                              >
+                                Sign Out
+                              </p>
+                            ) : (
+                              <>
+                                <p className="block text-sm text-gray-700">
+                                  {authenticated ? "Sign Out" : "Sign In:"}
+                                </p>
+                                <div className="flex w-full justify-left py-2">
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleCBAuthenticate();
+                                    }}
+                                    className="flex-shrink-0 flex text-cadet hover:bg-blue-700 hover:bg-opacity-5 border-blue-700 border py-2 px-4 focus:outline-none rounded text-lg mt-10 sm:mt-0 mr-2"
+                                  >
+                                    <Coinbase className="w-6" />
+                                  </button>
+                                  <button
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleAuthenticate();
+                                    }}
+                                    className="flex-shrink-0 flex text-cadet hover:bg-gold hover:bg-opacity-5 border-gold border py-2 px-4 focus:outline-none rounded text-lg mt-10 sm:mt-0 mx-2"
+                                  >
+                                    <Metamask className="w-[22px] self-center" />
+                                  </button>
+                                  {/* <button
+                                    onClick={handleUAuthenticate}
+                                    className="flex-shrink-0 flex text-cadet hover:bg-blue-600 hover:bg-opacity-5 border-blue-600 border py-2 px-4 focus:outline-none rounded text-lg mt-10 sm:mt-0 ml-2"
+                                  >
+                                    <Unstoppable className="w-6" />
+                                  </button> */}
+                                </div>
+                              </>
+                            )}
+                          </div>
                         )}
                       </Menu.Item>
                     </Menu.Items>

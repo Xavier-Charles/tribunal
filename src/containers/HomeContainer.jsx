@@ -54,7 +54,7 @@ const HomeContainer = () => {
       <Navbar />
       <Hero
         handleAuthenticate={handleAuthenticate}
-        handleUAuthenticate={handleUDAuthenticate}
+        // handleUAuthenticate={handleUDAuthenticate}
         handleCBAuthenticate={handleCBAuthenticate}
       />
       <DaosFromYourNFTs

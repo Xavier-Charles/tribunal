@@ -3,7 +3,11 @@
 Tribunals is a decentralized NFT-based voting system for DAOs. DAOs can issue NFTs to wallets based on what matters to their community and the holders of these NFTs can create proposals and vote on these proposals whilst they have the NFTs of that tribunal.
 Users don't have to pay gas to participate in DAO governance.
 
-During the **EthSafari hackathon** 
+During the **Evmos Covalent hackathon** 
+- Support for Evmos testnet was added.
+- Chat
+
+During the **Metis hackathon** 
 - Support for Metis Georli testnet was added.
 
 During the **EthSafari hackathon** 

@@ -5,7 +5,7 @@ const WorldCoinVerify = ({ setIsHuman }) => {
 
   const verifyProof = async (proofData) => {
     const { signal, merkle_root, nullifier_hash, proof } = proofData;
-    console.log(proof); // TODO test this properly
+    // console.log(proof); // TODO test this properly
     const url = "https://developer.worldcoin.org/api/v1/verify";
     const options = {
       method: "POST",
@@ -24,7 +24,7 @@ const WorldCoinVerify = ({ setIsHuman }) => {
     };
 
     const res = await (await fetch(url, options)).json();
-    console.log(res); // TODO check the response object.
+    // console.log(res); // TODO check the response object.
 
     if (res) setIsHuman(true);
   };

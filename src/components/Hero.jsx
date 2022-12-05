@@ -18,7 +18,7 @@ const Hero = ({
           </p>
         </div>
         <ConnectWallet
-          handleUAuthenticate={handleUAuthenticate}
+          // handleUAuthenticate={handleUAuthenticate}
           handleAuthenticate={handleAuthenticate}
           handleCBAuthenticate={handleCBAuthenticate}
         />

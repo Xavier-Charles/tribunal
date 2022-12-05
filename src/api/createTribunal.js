@@ -1,18 +1,13 @@
 import { ethers } from "ethers";
 import { useState } from "react";
-import contractABIPolygon from "./createTribunalABI.json";
-import contractABIMetis from "./createTribunalABI-two.json";
 import {
-  metisChainId,
-  metisExplorer,
+  contractABIs,
+  contractDPConstant,
+  contract_addresses,
+  explorers,
   polygonChainId,
-  polygonExplorer,
-} from "./contants";
-
-const contract_address_polygon = import.meta.env
-  .VITE_CREATE_TRIB_CONTRACT_ADDRESS_POLYGON;
-const contract_address_metis = import.meta.env
-  .VITE_CREATE_TRIB_CONTRACT_ADDRESS_METIS;
+  supportedChainIds,
+} from "./constants";
 
 // Creates transaction to create a Tribunal
 export const useCreateTribunalAction = () => {
@@ -36,21 +31,12 @@ export const useCreateTribunalAction = () => {
         method: "eth_chainId",
       });
 
-      const contract_address =
-        chainId === metisChainId
-          ? contract_address_metis
-          : contract_address_polygon;
+      const contract_address = contract_addresses[chainId];
+      const contractABI = contractABIs[chainId];
+      const explorer = explorers[chainId];
 
-      const [contractABI, explorer] =
-        chainId === metisChainId
-          ? [contractABIMetis, metisExplorer]
-          : [contractABIPolygon, polygonExplorer];
-
-      if (chainId !== metisChainId && chainId !== polygonChainId) {
-        setError(
-          "Please change the network to metis testnet or Polygon mainnet"
-        );
-
+      if (!supportedChainIds.includes(chainId)) {
+        setError("Please use a supported network");
         return;
       }
 
@@ -64,19 +50,19 @@ export const useCreateTribunalAction = () => {
       );
 
       const tribTx =
-        chainId === metisChainId
-          ? await tribContract.createTribunal(
+        chainId === polygonChainId
+          ? await tribContract.createTrib(walletAddress, fileUrl, mintFee, {
+              gasLimit: 3_000_000,
+            })
+          : await tribContract.createTribunal(
               tribunalName,
               fileUrl,
-              mintFee,
+              mintFee * contractDPConstant,
               walletAddress,
               {
                 gasLimit: 3_000_000,
               }
-            )
-          : await tribContract.createTrib(walletAddress, fileUrl, mintFee, {
-              gasLimit: 3_000_000,
-            });
+            );
 
       setisCreating(true);
 
@@ -90,8 +76,6 @@ export const useCreateTribunalAction = () => {
       tx.logs.map((log, i) => {
         try {
           let decodedData = iface.parseLog(log);
-
-          console.log(`${i}: `, decodedData);
           if (decodedData.name === "childContract" && decodedData.args[0]) {
             setNewTrib(decodedData.args[0]);
             newTribAddress = decodedData.args[0];
@@ -103,9 +87,6 @@ export const useCreateTribunalAction = () => {
 
       setTxLink(`${explorer}tx/${tribTx.hash}`);
       setisCreating(false);
-      // console.log(
-      //   `Mined, see transaction: https://polygonscan.com/tx/${tribTx.hash}`
-      // );
 
       return [newTribAddress, chainId];
     } catch (error) {

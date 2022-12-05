@@ -32,9 +32,12 @@ const NewTribunal = () => {
   });
 
   const handleChange = (e) => {
-    if (e.target.name === "mintFee")
-      setValues({ ...values, [e.target.name]: Math.round(e.target.value, 10) });
-    else setValues({ ...values, [e.target.name]: e.target.value });
+    if (e.target.name === "mintFee") {
+      setValues({
+        ...values,
+        [e.target.name]: e.target.value,
+      });
+    } else setValues({ ...values, [e.target.name]: e.target.value });
   };
   const handleValidate = () => {
     const { tribunalName, email, walletAddress, mintFee, about } = values;
@@ -44,7 +47,7 @@ const NewTribunal = () => {
       walletAddress &&
       about &&
       fileUrl !== "" &&
-      mintFee >= 0
+      parseFloat(mintFee) > 0
     ) {
       return true;
     }
@@ -73,14 +76,14 @@ const NewTribunal = () => {
           tribunalName,
           walletAddress,
           fileUrl,
-          mintFee
+          parseFloat(mintFee)?.toFixed(4)
         );
 
         const tribunal = {
           tribunalName,
           email,
           walletAddress,
-          mintFee,
+          mintFee: parseFloat(mintFee)?.toFixed(4),
           about,
           fileUrl,
           creator: address,
@@ -197,6 +200,7 @@ const NewTribunal = () => {
                     </label>
                     <input
                       type="number"
+                      step={0.0001}
                       name="mintFee"
                       id="mintFee"
                       min={0}
@@ -270,6 +274,7 @@ const NewTribunal = () => {
                       {success}
                     </p>
                     <a
+                      target="_blank"
                       href={txLink}
                       className={`${
                         txLink ? "" : "hidden"

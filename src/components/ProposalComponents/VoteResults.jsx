@@ -5,7 +5,7 @@ import { truncateWithEllipsis } from "../../api/utils";
 const VoteResults = ({ proposal }) => {
   const [results, setResults] = useState({ for: 0, against: 0 });
 
-  const totalVotes = proposal.votes?.ballot
+  const totalVotes = proposal?.votes?.ballot
     ? Object.keys(proposal.votes.ballot).length
     : 0;
 
@@ -16,7 +16,7 @@ const VoteResults = ({ proposal }) => {
 
   useEffect(() => {
     let isSubscribed = true;
-    const votes = proposal.votes?.ballot;
+    const votes = proposal?.votes?.ballot;
     const res = { for: 0, against: 0 };
     if (votes) {
       Object.keys(votes).map((key) => {
@@ -45,15 +45,15 @@ const VoteResults = ({ proposal }) => {
               <div>
                 <b>IPFS</b>
                 <a
-                  href={`https://w3s.link/ipfs/${proposal.votes?.cid}`}
+                  href={`https://w3s.link/ipfs/${proposal?.votes?.cid}`}
                   target="_blank"
-                  className="whitespace-nowrap float-right"
+                  className="whitespace-nowrap float-right text-gold"
                   rel="noopener noreferrer"
-                  title={proposal.votes?.cid}
+                  title={proposal?.votes?.cid}
                 >
                   {" "}
-                  {proposal.votes?.cid &&
-                    truncateWithEllipsis(proposal.votes.cid, 12, "end")}
+                  #{proposal?.votes?.cid &&
+                    truncateWithEllipsis(proposal?.votes.cid, 12, "end")}
                   <i
                     className="iconfont iconexternal-link ml-1"
                     style={{ fontSize: "16px", lineHeight: "16px" }}
@@ -67,13 +67,13 @@ const VoteResults = ({ proposal }) => {
               <div>
                 <b>Start date</b>
                 <span className="float-right text-skin-link">
-                  {moment(proposal.startDate).format("MMM DD, YYYY, HH:mm")}
+                  {moment(proposal?.startDate).format("MMM DD, YYYY, HH:mm")}
                 </span>
               </div>
               <div>
                 <b>End date</b>
                 <span className="text-skin-link float-right">
-                  {moment(proposal.endDate).format("MMM DD, YYYY, HH:mm")}
+                  {moment(proposal?.endDate).format("MMM DD, YYYY, HH:mm")}
                 </span>
               </div>
               <div>
