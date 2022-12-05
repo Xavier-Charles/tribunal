@@ -71,6 +71,7 @@ const Discussion = ({ proposal }) => {
       if (e.key === "Enter" && message !== "") {
         if (e.shiftKey || e.ctrlKey) return;
         handleSend(message);
+        setMessage("");
       }
     },
     [handleSend, message]
@@ -110,8 +111,8 @@ const Discussion = ({ proposal }) => {
       <div className="flex flex-col h-[calc(100%-49px)] w-full">
         <div className="flex flex-col flex-grow w-full rounded-lg overflow-hidden">
           <div className="flex flex-col flex-grow p-4 overflow-auto">
-            {messages?.length > 0 ? (
-              messages.map((msg) => (
+            {items?.length > 0 ? (
+              items.map((msg) => (
                 <Message key={msg?.id} user={user} msg={msg} />
               ))
             ) : (

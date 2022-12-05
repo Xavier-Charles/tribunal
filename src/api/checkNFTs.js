@@ -35,7 +35,8 @@ export const VerifyNFTs = async (contract_address, userAddress) => {
     const chainId = await window.ethereum.request({
       method: "eth_chainId",
     });
-    if (supportedChainIds[chainId].includes(chainId)) return true;
+
+    if (supportedChainIds.includes(`${chainId}`)) return true;
 
     const res = await fetch(
       `https://deep-index.moralis.io/api/v2/${userAddress}/nft/${contract_address}?chain=polygon&format=decimal`,
